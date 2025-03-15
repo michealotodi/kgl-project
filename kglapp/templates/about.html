@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+</head>
+<body>
+    <h1>Please login to start</h1>
+    <form>
+        <div class="card">
+        <label for="fname">First name:</label>
+    
+        <br>
+        <input type="text" id="fname" name="fname">
+        <br>
+        <label for="lname">Last name:</label>
+        <br>
+        <input type="text" id="lname" name="lname">
+        <br>
+        <div>
+            <br>
+        <input type="submit" value="Submit">
+        </div>
+        </div>
+      </form>
+      
+
+      <script src="js/bootstrap.bundle.min.js"></script>   
+</body>
+</html>

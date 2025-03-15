@@ -1,0 +1,21 @@
+body {
+    background-image: url('../images/poto1.jpg');
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.login-form{
+    border: 2px solid black;
+    width: 600px;
+    border-radius: 25px;
+    padding: 10px;
+    background-color: aliceblue;
+    justify-content: center
+
+}
+.container{
+    width: auto;
+    height: auto;
+    margin-left: 300px;
+    margin-top: 100px;
+}

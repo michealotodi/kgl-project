@@ -1,0 +1,17 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to KGLApp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to KGLApp</h1>
+        <p>Your gateway to manage everything efficiently!</p>
+        <a href="{% url 'login' %}" class="button">Login</a>
+    </div>
+</body>
+</html>

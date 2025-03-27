@@ -1,0 +1,23 @@
+<!-- home.html -->
+
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}Procurement - KGLApp{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <h2>Record sale</h2>
+    <div class="procurement form">
+        <form method="post" class="login-form">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <br>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

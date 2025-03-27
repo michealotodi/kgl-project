@@ -1,0 +1,52 @@
+<!-- home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home - KGLApp{% endblock %}
+
+{% block header %}Stock Page{% endblock %}
+
+{% block content %}
+<h1>Our Stock Overview</h1>
+
+<form method="get" action="{% url 'stock_page' %}">
+    <input type="text" name="search" placeholder="Search Produce" value="{{ search_query }}">
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Quantity (kg)</th>
+            <th>Buying Cost (UgX)</th>
+            <th>Selling Price (UgX)</th>
+            <th>Dealer</th>
+            <th>Branch</th>
+            <th>Source</th>
+            <th>Date</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in stock_items %}
+            <tr>
+                <td>{{ item.produce_name }}</td>
+                <td>{{ item.produce_type }}</td>
+                <td>{{ item.tonnage_kg }}</td>
+                <td>{{ item.cost_ugx }}</td>
+                <td>{{ item.selling_price_ugx }}</td>
+                <td>{{ item.dealer_name }}</td>
+                <td>{{ item.branch_name }}</td>
+                <td>{{ item.source }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.time }}</td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="10" style="text-align: center;">No stock available.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

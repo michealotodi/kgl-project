@@ -1,0 +1,66 @@
+/* Overall container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header style */
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 30px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+/* Table headers styling */
+th {
+    background-color: #4CAF50;  /* Green background */
+    color: white;
+    padding: 10px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Table rows styling */
+td {
+    background-color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+/* Row hover effect */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Empty message for no sales records */
+td.empty-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* Table border styling */
+table, th, td {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Add some space between the table and other content */
+table {
+    margin-bottom: 40px;
+}

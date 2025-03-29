@@ -2,13 +2,16 @@
 
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
+{%load static%}
 
 {% block title %}Procurement - KGLApp{% endblock %}
 
 
 
 {% block content %}
+<div class="logo-container">
+    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
+</div>
 <div class="container">
     <h2>Add procurement</h2>
     <div class="procurement form">
@@ -20,4 +23,8 @@
         </form>
     </div>
 </div>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

@@ -1,11 +1,14 @@
 <!-- home.html -->
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}Home - KGLApp{% endblock %}
 
 {% block header %}Stock Page{% endblock %}
 
 {% block content %}
+<div class="logo-container">
+    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
+</div>
 <h1>Our Stock Overview</h1>
 
 <form method="get" action="{% url 'stock_page' %}">
@@ -49,4 +52,8 @@
         {% endfor %}
     </tbody>
 </table>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

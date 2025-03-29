@@ -15,7 +15,10 @@ from django.shortcuts import render,redirect
 from .models import Produce
 from django.shortcuts import render
 from .models import Procurement
-# Create your views here.  
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect
+from django.shortcuts import render
+
 def index(request):
     return render(request, "index.html")
 
@@ -132,3 +135,19 @@ def stock_page(request):
         'stock_items': stock_items,
         'search_query': search_query
     })
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'signup.html', {'form': form})
+
+
+
+
+

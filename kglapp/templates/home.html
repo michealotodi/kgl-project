@@ -1,10 +1,50 @@
 <!-- home.html -->
 {% extends 'base.html' %}
-
+{%load static%}
 {% block title %}Home - KGLApp{% endblock %}
 
 {% block header %}Home page{% endblock %}
 
 {% block content %}
-    <p>Welcome to the KGLApp homepage. Choose an option from the sidebar to get started!</p>
+<div class="logo-container">
+    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
+</div>
+
+<h1 class="come">Welcome to KGL Produce Management System</h1>
+<p>Here, you can keep track of procurement, monitor your stock,
+     manage sales, and ensure accurate records for every transaction.</p>
+
+    <p> Choose an option from the sidebar to get started!</p>
+    
+    <section class="rules-section">
+        <h2 class="come">Company Rules & Regulations</h2>
+        <ul>
+            <li>Only products available in stock should be sold. Once it is out of stock, the manager should be notified.</li>
+            <li>For any sold produce, its tonnage is reduced automatically.</li>
+            <li>Prices are determined by the manager and are pre-set in the system.</li>
+            <li>No sales agent is allowed to record any produce entry.</li>
+            <li>Only the manager can record procurement and also manage produce types, prices, and dealers.</li>
+            <li>The manager can also record a sale.</li>
+            <li>Only the director, Mr. Micheal, is allowed to view sales made in all branches (summary only).</li>
+        </ul>
+        <!-- <div class="logo-containers">
+            <img src="{% static 'css/kgl.jpeg' %}" alt="KGL Logo" class="logo">
+        </div> -->
+
+        <section class="operation-hours">
+            <h2 class="come">Operation Hours</h2>
+            <p>Our operations are open at the following times:</p>
+            <ul>
+                <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
+                <li><strong>Saturday:</strong> 9:00 AM - 5:00 PM</li>
+                <li><strong>Sunday:</strong> Closed</li>
+            </ul>
+        </section>
+        
+        <footer class="site-footer">
+            <p>&copy; 2025 KGLApp. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+        </footer>
+        
+    </section>
 {% endblock %}

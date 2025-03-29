@@ -4,6 +4,7 @@ from django import forms
 from .models import Sale
 from django import forms
 from .models import CreditSale
+
 # from django import forms
 # from .models import Produce
 
@@ -48,10 +49,7 @@ class CreditSaleForm(forms.ModelForm):
 
 
 
-# class ProduceForm(forms.ModelForm):
-#     class Meta:
-#         model = Produce
-#         fields = ['name', 'price', 'type', 'dealer']
+
 
 
 

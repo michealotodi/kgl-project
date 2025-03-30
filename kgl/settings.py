@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -132,3 +134,14 @@ STATICFILES_DIRS = [
 ]
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+# settings.py
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'michealotodi81@gmail.com'         # Your Gmail address
+EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'        # App password (not your Gmail login)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+

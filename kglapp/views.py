@@ -18,6 +18,12 @@ from .models import Procurement
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.shortcuts import render
+from .models import CreditSale
+from django.shortcuts import render
+from django.shortcuts import render
+from .models import CreditList
+
+
 
 def index(request):
     return render(request, "index.html")
@@ -52,7 +58,7 @@ def record_sale(request):
         form = SaleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('daily_sales')
     else:
         form = SaleForm()
     
@@ -71,39 +77,26 @@ def sales_list(request):
 
 
 
+
 def record_credit_sale(request):
     if request.method == 'POST':
         form = CreditSaleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('credit_sales_list')
+            return redirect("credit_list")
     else:
         form = CreditSaleForm()
     return render(request, 'record_credit_sale.html', {'form': form})
 
-def credit_sales_list(request):
-    credits = CreditSale.objects.all()
-    return render(request, 'credit_sales_list.html', {'credits': credits})
+# def list_credit_sales_(request):
+#     credits = CreditSale.objects.all()
+#     return render(request, 'list_credit_sales.html', {'credits': credits})
 
 
 
 def daily_sales_report(request):
-    today = datetime.today().date()  # or use: now().date()
-
-    # Filter sales by today's date
-    sales = Sale.objects.filter(date=today)
-
-    # Calculate total amount and tonnage for the day
-    total_amount = sum(s.amount_paid for s in sales)
-    total_tonnage = sum(s.tonnage_kg for s in sales)
-
-    context = {
-        'sales': sales,
-        'today': today,
-        'total_amount': total_amount,
-        'total_tonnage': total_tonnage,
-    }
-    return render(request, 'daily_sales_report.html', context)
+   sales = Sale.objects.all()
+   return render(request,'daily_sales_report.html',{'sales':sales})
 
 
 """"
@@ -136,18 +129,27 @@ def stock_page(request):
         'search_query': search_query
     })
 
+from django.shortcuts import render, redirect
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 def signup_view(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            user = form.save()
+            login(request, user)  # Log in the new user automatically
+            return redirect("home")  # Change to your actual home route
     else:
         form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, "signup.html", {"form": form})
 
 
+def credit_list(request):
+    credits = CreditList.objects.all()  # Query all items
+    print(CreditList.objects.all())  # Should return a QuerySet with records
+
+    return render(request, 'credit_list.html', {'credits': credits})
 
 
 

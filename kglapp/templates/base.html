@@ -28,17 +28,15 @@
         
         <!-- Reports -->
         <a href="{% url 'stock_page' %}">Stock Page</a>
+
+        <a href="{% url 'credit_list' %}">credit list</a>
         
         <a href="{% url 'logout'%}">Logout</a>
 
     </div>
 
     <div class="main-content">
-        <div class="header">
-            {% block header %}Welcome to KGLApp{% endblock %}
-        </div>
-
-        <div class="content">
+       <div class="content">
             {% block content %}
             <!-- Page-specific content goes here -->
             {% endblock %}

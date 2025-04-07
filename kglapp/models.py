@@ -160,3 +160,18 @@ class Produce(models.Model):
         return self.name
 
 
+class CreditList(models.Model):
+    buyer_name = models.CharField(max_length=100)
+    national_id = models.CharField(max_length=14)  
+    location = models.CharField(max_length=100)
+    contact = models.CharField(max_length=15)
+    amount_due = models.PositiveIntegerField()
+    sales_agent = models.CharField(max_length=100)
+    due_date = models.DateField()
+    produce_name = models.CharField(max_length=100)
+    produce_type = models.CharField(max_length=100)
+    tonnage = models.PositiveIntegerField()
+    dispatch_date = models.DateField(default=timezone.now)
+
+    
+

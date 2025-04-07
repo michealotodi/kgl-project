@@ -3,7 +3,7 @@ from .models import Procurement
 from django import forms
 from .models import Sale
 from django import forms
-from .models import CreditSale
+from .models import CreditSale,CreditList
 
 # from django import forms
 # from .models import Produce
@@ -40,7 +40,7 @@ class SaleForm(forms.ModelForm):
 
 class CreditSaleForm(forms.ModelForm):
     class Meta:
-        model = CreditSale
+        model = CreditList
         fields = '__all__'
         widgets = {
             'due_date': forms.DateInput(attrs={'type': 'date'}),

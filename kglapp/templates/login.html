@@ -9,6 +9,9 @@
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <div class="logo-container">
+        <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
+    </div>
     
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 
@@ -28,10 +31,7 @@
         
         <span class="signup">Do not have an account? <a href="{% url 'signup' %}">Sign up.</a></span>
         <br>
-        <span class="signup">For Manager Only <a href="{% url 'signup' %}">Sign up.</a></span>
-        <br>
-        <span class="signup">For Director Only <a href="{% url 'signup' %}">Sign up.</a></span>
-
+        
         <p>Do not share your password wit anyone.</p>
     </div>
     

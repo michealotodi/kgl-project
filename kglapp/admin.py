@@ -2,9 +2,10 @@ from django.contrib import admin
 from django.contrib import admin
 from django.contrib import admin
 # Register your models here.
-from .models import Procurement,Sale,CreditSale
+from .models import Procurement,Sale,CreditSale,CreditList
 admin.site.register(Procurement)
 admin.site.register(Sale)
 admin.site.register(CreditSale)
+admin.site.register(CreditList)
 
 

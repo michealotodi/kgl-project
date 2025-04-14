@@ -15,22 +15,45 @@
         <a href="{% url 'home' %}">Home</a>
                          
 
-        <!-- Procurement -->
+        
         <a href="{% url 'procurement' %}">Add Procurement</a>
         
-        <!-- Sales -->
+        
         <a href="{% url 'record_sale' %}">Record Sale</a>
         
         <a href="{% url 'daily_sales' %}">Sales Reports</a>
 
-        <!-- Credit Sales -->
-        <a href="{% url 'record_credit_sale' %}">Record Credit Sale</a>
         
-        <!-- Reports -->
+        <a href="{% url 'record_credit_sale' %}">Record Credit Sale</a>
+       
         <a href="{% url 'stock_page' %}">Stock Page</a>
 
         <a href="{% url 'credit_list' %}">credit list</a>
         
+        <a href="{% url 'director_dashboard' %}">director dashboard</a>
+
+        <a href="{% url 'manager_dashboard' %}">manager dashboard</a>
+
+        <a href="{% url 'manager_dashboard_matugga' %}">manager dashboard matugga</a>
+
+        <a href="{% url 'maganjo_sales_report' %}">maganjo sales report</a>
+
+        <a href="{% url 'branch_comparison_dashboard' %}">Branch Comparison</a>
+
+        <a href="{% url 'credit_recovery_report' %}">credit recovery report</a>
+
+        <a href="{% url 'sales_agent_performance' %}">sales agent performance</a>
+
+        <a href="{% url 'add_product' %}">add product</a>
+
+        <a href="{% url 'product_list' %}">product list</a>
+
+        <a href="{% url 'procurement_list' %}" class="btn btn-primary">procurement list</a>
+
+        
+        <a href="{% url 'user_profile' %}">Profile</a>
+
+
         <a href="{% url 'logout'%}">Logout</a>
 
     </div>
@@ -38,7 +61,7 @@
     <div class="main-content">
        <div class="content">
             {% block content %}
-            <!-- Page-specific content goes here -->
+            
             {% endblock %}
         </div>
     </div>

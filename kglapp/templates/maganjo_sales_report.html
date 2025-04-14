@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+<div class="sales-list-container">
+    <h2>Maganjo Sales Report ({{ today }})</h2>
+
+    <table class="table table-bordered mt-4">
+        <thead class="table-primary">
+            <tr>
+                <th>Produce Name</th>
+                <th>Tonnage (Kg)</th>
+                <th>Amount Paid</th>
+                <th>Buyer Name</th>
+                <th>Sales Agent</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sale in sales %}
+            <tr>
+                <td>{{ sale.produce_name }}</td>
+                <td>{{ sale.tonnage_kg }}</td>
+                <td>{{ sale.amount_paid }}</td>
+                <td>{{ sale.buyer_name }}</td>
+                <td>{{ sale.sales_agent }}</td>
+                <td>{{ sale.date }}</td>
+                <td>{{ sale.time }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center text-muted">No sales made today in Maganjo.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
+

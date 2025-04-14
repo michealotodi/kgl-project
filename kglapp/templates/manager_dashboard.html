@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Manager Dashboard - {{ branch }}{% endblock %}
+
+{% block content %}
+
+
+<h1>Manager Dashboard - {{ branch }}</h1>
+
+<div class="grid">
+    <div class="card">
+        <h2>Total Procured (Kg)</h2>
+        <p>{{ total_procured }}</p>
+    </div>
+    <div class="card">
+        <h2>Total Sold (Kg)</h2>
+        <p>{{ total_sales }}</p>
+    </div>
+    <div class="card">
+        <h2Total Credit Sales (Kg)></h2Total></h2>
+        <p>{{ total_credit_sales }}</p>
+    </div>
+    <div class="card">
+        <h2>Credit Due (UGX)</h2>
+        <p>{{ total_due }}</p>
+    </div>
+    <div class="card">
+        <h2>Procurement Records</h2>
+        <p>{{ procurement_count }}</p>
+    </div>
+    <div class="card">
+        <h2>Sales Transactions</h2>
+        <p>{{ sales_count }}</p>
+    </div>
+    <div class="card">
+        <h2>Credit Transactions</h2>
+        <p>{{ credit_count }}</p>
+    </div>
+</div>
+{% endblock %}
+

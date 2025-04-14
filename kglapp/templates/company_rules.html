@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Company Rules - Karibu Groceries LTD</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color:#E1F5FE;
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            margin-top: 2rem;
+            color: #007bff;
+        }
+
+        ul {
+            line-height: 1.8;
+            padding-left: 1.2rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 2rem;
+            background-color: #007bff;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+        .login-button {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: rgb(65, 65, 223); /* green */
+    color: white !important;
+    text-decoration: none;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.login-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Karibu Groceries LTD - Company Rules</h1>
+        <p>Here, you can keep track of procurement, monitor your stock,
+            manage sales, and ensure accurate records for every transaction.</p>
+        <h2>📝 General Rules</h2>
+        <ul>
+            <li>All employees must report to work by 8:00 AM.</li>
+            <li>Professional behavior is expected at all times.</li>
+            <li>No unauthorized persons are allowed in restricted areas.</li>
+            <li>Use of company resources for personal gain is prohibited.</li>
+            <li>All procurement and sales must be logged through the system daily.</li>
+            <li>Only products available in stock should be sold. Once it is out of stock, the manager should be notified.</li>
+            <li>For any sold produce, its tonnage is reduced automatically.</li>
+            <li>Prices are determined by the manager and are pre-set in the system.</li>
+            <li>No sales agent is allowed to record any produce entry.</li>
+            <li>Only the manager can record procurement and also manage produce types, prices, and dealers.</li>
+            <li>The manager can also record a sale.</li>
+            <li>Only the director, Mr. Micheal, is allowed to view sales made in all branches (summary only).</li>
+            
+        </ul>
+
+        <h2>⏰ Working Hours</h2>
+        <ul>
+            <li><strong>Monday - Friday:</strong> 8:00 AM to 5:00 PM</li>
+            <li><strong>Saturday:</strong> 8:00 AM to 1:00 PM</li>
+            <li><strong>Sunday:</strong> Closed</li>
+        </ul>
+
+        <a href="{% url 'login' %}" class="login-button">→ Go to Log In</a>
+    </div>
+</body>
+</html>
+

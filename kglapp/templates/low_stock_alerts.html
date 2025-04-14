@@ -1,0 +1,22 @@
+<!-- templates/low_stock_alerts.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>⚠️ Low Stock Alerts</h2>
+    {% if low_stock_products %}
+      <ul class="list-group">
+        {% for product in low_stock_products %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{ product.name }}
+            <span class="badge bg-danger text-white">Remaining: {{ product.stock }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No low stock alerts right now. ✅</p>
+    {% endif %}
+  </div>
+{% endblock %}
+

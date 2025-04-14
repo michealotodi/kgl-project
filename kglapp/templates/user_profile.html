@@ -1,0 +1,15 @@
+<!-- profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <h2>User Profile</h2>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Username:</strong> {{ user.username }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+        <li class="list-group-item"><strong>Branch:</strong> {{ profile.branch }}</li>
+        <li class="list-group-item"><strong>Role:</strong> {{ profile.role }}</li>
+    </ul>
+</div>
+{% endblock %}
+

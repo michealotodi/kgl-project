@@ -1,0 +1,15 @@
+<!-- templates/kglapp/add_product.html -->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Add New Product</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-success">Save</button>
+    </form>
+  </div>
+{% endblock %}
+

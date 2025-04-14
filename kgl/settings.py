@@ -134,6 +134,8 @@ STATICFILES_DIRS = [
 ]
 LOGOUT_REDIRECT_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/login/'
+
 # settings.py
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -143,5 +145,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'michealotodi81@gmail.com'         # Your Gmail address
 EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'        # App password (not your Gmail login)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SUPPORT_EMAIL = 'michealotodi81@gmail.com'   # Email address to receive support requests
 
 

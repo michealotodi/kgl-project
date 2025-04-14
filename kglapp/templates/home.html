@@ -1,4 +1,4 @@
-<!-- home.html -->
+
 {% extends 'base.html' %}
 {%load static%}
 {% block title %}Home - KGLApp{% endblock %}
@@ -9,8 +9,14 @@
 <div class="logo-container">
     <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
 </div>
-
-<h1 class="come">Welcome to KGL Produce Management System</h1>
+<div class="mt-4"></div>
+    <a href="{% url 'faq' %}" class="btn btn-success mb-3">FAQ</a>
+    <a href="{% url 'contact_support' %}" class="btn btn-primary mb-3">Contact Support</a>
+    <a href="{% url 'low_stock_alerts' %}" class="btn btn-primary mb-3">Low Stock Alerts</a>
+    <a href="{% url 'supplier_list' %}" class="btn btn-primary mb-3">View Suppliers</a>
+    <a href="{% url 'add_supplier' %}" class="btn btn-success mb-3">Add New Supplier</a>
+  </div>
+<h1 class="come">Welcome to KGL Management System</h1>
 <p>Here, you can keep track of procurement, monitor your stock,
      manage sales, and ensure accurate records for every transaction.</p>
 
@@ -27,9 +33,7 @@
             <li>The manager can also record a sale.</li>
             <li>Only the director, Mr. Micheal, is allowed to view sales made in all branches (summary only).</li>
         </ul>
-        <!-- <div class="logo-containers">
-            <img src="{% static 'css/kgl.jpeg' %}" alt="KGL Logo" class="logo">
-        </div> -->
+        
 
         <section class="operation-hours">
             <h2 class="come">Operation Hours</h2>

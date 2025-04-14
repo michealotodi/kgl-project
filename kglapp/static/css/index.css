@@ -11,7 +11,7 @@ body {
 
 .container {
     text-align: center;
-    background:#7ca3c5;
+    background:white;
     padding: 50px 30px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -32,8 +32,8 @@ p {
 a.button {
     padding: 12px 25px;
     font-size: 1em;
-    background-color: #5a67d8;
-    color: white;
+    background-color:#007bff;
+    color: rgb(52, 52, 215);
     text-decoration: none;
     border-radius: 8px;
     transition: background-color 0.3s ease;
@@ -42,10 +42,4 @@ a.button {
 a.button:hover {
     background-color: #434190;
 }
-/* .button{
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin-bottom: 50px;
-} */
+

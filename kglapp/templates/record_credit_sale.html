@@ -1,4 +1,4 @@
-<!-- home.html -->
+
 
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
@@ -17,12 +17,29 @@
     <div class="procurement form">
         <form method="post" class="login-form">
             {% csrf_token %}
-            {{ form|crispy }}
-            <br>
+            {{ form.buyer_name|as_crispy_field }}
+            {{ form.national_id|as_crispy_field }}
+            {{ form.location|as_crispy_field }}
+            {{ form.contact|as_crispy_field }}
+            {{ form.amount_due|as_crispy_field }}
+            {{ form.sales_agent|as_crispy_field }}
+            {{ form.due_date|as_crispy_field }}
+            {{ form.produce_name|as_crispy_field }}
+            {{ form.produce_type|as_crispy_field }}
+            {{ form.tonnage_kg|as_crispy_field }}
+            {{ form.dispatch_date|as_crispy_field }}
+            {{ form.branch_name|as_crispy_field }}  <!-- ✅ Branch select field -->
+                        <br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
+{% for credit in credits %}
+    <p>{{ credit.buyer_name }}</p>
+{% empty %}
+    <p>No credits available.</p>
+{% endfor %}
+
 <footer class="site-footer">
     <p>&copy; 2025 KGLApp. All rights reserved.</p>
     <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>

@@ -11,6 +11,10 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 from django.shortcuts import render
 from django.urls import path
+from .views import director_dashboard
+from django.urls import path
+from .views import add_product
+from .views import faq_view  # 👈 Import the view function
 
 
 urlpatterns = [
@@ -31,7 +35,24 @@ urlpatterns = [
         path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="reset_password_confirm.html"), name='password_reset_confirm'),
         path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name="reset_password_complete.html"), name='password_reset_complete'),
         path('credits/', views.credit_list, name='credit_list'),
-
+        path('dashboard/director/', director_dashboard, name='director_dashboard'),
+        path('dashboard/manager/', views.manager_dashboard, name='manager_dashboard'),
+        path('dashboard/matugga/', views.manager_dashboard_matugga, name='manager_dashboard_matugga'),
+        path('maganjo-sales/', views.maganjo_sales_report, name='maganjo_sales_report'),
+        path('rules/', views.company_rules, name='company_rules'),
+        path('profile/', views.user_profile, name='user_profile'),
+        path('branch-comparison/', views.branch_comparison_dashboard, name='branch_comparison_dashboard'),
+        path('credit-recovery-report/', views.credit_recovery_report, name='credit_recovery_report'),
+        path('sales-agent-performance/', views.sales_agent_performance, name='sales_agent_performance'),
+        path('add-product/', add_product, name='add_product'),
+        path('product-list/', views.product_list, name='product_list'),
+        path('procurements/', views.procurement_list, name='procurement_list'),
+        path('faq/', faq_view, name='faq'),
+        path('contact/', views.contact_support, name='contact_support'),
+        path('thank-you/', views.thank_you, name='thank_you'),
+        path('low-stock-alerts/', views.low_stock_alerts, name='low_stock_alerts'),
+        path('suppliers/', views.supplier_list, name='supplier_list'),  # List suppliers
+        path('suppliers/add/', views.add_supplier, name='add_supplier'),  # Add supplier
 
 ]
 

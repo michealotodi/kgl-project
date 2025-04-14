@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Branch Comparison Dashboard</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Branch</th>
+                <th>Total Sales Amount</th>
+                <th>Total Sales (Kg)</th>
+                <th>Total Procurement (Kg)</th>
+                <th>Total Credit (Kg)</th>
+                <th>Total Credit Due</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for branch, data in branch_data.items %}
+                <tr>
+                    <td>{{ branch }}</td>
+                    <td>{{ data.total_sales_amount }}</td>
+                    <td>{{ data.total_sales_kg }}</td>
+                    <td>{{ data.total_procurement_kg }}</td>
+                    <td>{{ data.total_credit_kg }}</td>
+                    <td>{{ data.total_credit_due }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

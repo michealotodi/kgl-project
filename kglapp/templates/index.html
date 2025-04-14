@@ -1,7 +1,26 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <style>
+        .rules-button {
+    display: inline-block;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.rules-button:hover {
+    background-color: #138496;
+}
+    </style>
     
     <meta charset="UTF-8">
     <title>Welcome to KGLApp</title>
@@ -13,8 +32,8 @@
     <div class="container">
         <h1>Welcome to KGLApp</h1>
         <p>Your gateway to manage everything efficiently!</p>
-        <a href="{% url 'login' %}" class="button">Login</a>
+        <a href="{% url 'company_rules' %}" class="rules-button">Proceed.</a>
     </div>
-    
+
 </body>
 </html>

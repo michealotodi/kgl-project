@@ -1,31 +1,36 @@
-<!-- home.html -->
-
 {% extends 'base.html' %}
-
-{%load static%}
-
+{% load static %}
 {% load crispy_forms_tags %}
 
-
-{% block title %}Procurement - KGLApp{% endblock %}
-
-
+{% block title %}Record Sale - KGLApp{% endblock %}
 
 {% block content %}
 <div class="logo-container">
     <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
 </div>
+
 <div class="container">
-    <h2>Record sale</h2>
+    <h2>Record Sale</h2>
     <div class="procurement form">
         <form method="post" class="login-form">
             {% csrf_token %}
-            {{ form|crispy }}
-            <br>
+            <div class="form-group">
+                {{ form.produce_name|as_crispy_field }}
+                {{ form.tonnage_kg|as_crispy_field }}
+                {{ form.amount_paid|as_crispy_field }}
+                {{ form.buyer_name|as_crispy_field }}
+                {{ form.sales_agent|as_crispy_field }}
+                {{ form.date|as_crispy_field }}
+                {{ form.time|as_crispy_field }}
+                {{ form.branch_name|as_crispy_field }}  <!-- ✅ Branch dropdown -->
+            </div>
+
+            <br><br>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
+
 <footer class="site-footer">
     <p>&copy; 2025 KGLApp. All rights reserved.</p>
     <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>

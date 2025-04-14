@@ -1,0 +1,31 @@
+<!-- sales_agent_performance.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Sales Agent Performance</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Sales Agent</th>
+                <th>Total Sales Amount</th>
+                <th>Total Sales (Kg)</th>
+                <th>Number of Sales</th>
+                <th>Average Sale Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agent in agent_data %}
+                <tr>
+                    <td>{{ agent.sales_agent }}</td>
+                    <td>{{ agent.total_sales_amount }}</td>
+                    <td>{{ agent.total_sales_kg }}</td>
+                    <td>{{ agent.total_sales_count }}</td>
+                    <td>{{ agent.avg_sale_value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+

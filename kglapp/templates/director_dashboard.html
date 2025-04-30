@@ -1,40 +1,75 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
-
-{% block title %}Director Dashboard{% endblock %}
-
 {% block content %}
-
-<h1>Director Dashboard</h1>
-
-<div class="grid">
-    <div class="card">
-        <h2>Total Procured (Kg)</h2>
-        <p>{{ total_procurement_kg }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Sold (Kg)</h2>
-        <p>{{ total_sales_kg }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Sales Amount (UGX)</h2>
-        <p>{{ total_sales_amount }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Credit Sales (Kg)</h2>
-        <p>{{ total_credit_kg }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Credit Due (UGX)</h2>
-        <p>{{ total_credit_due }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Sales Transactions</h2>
-        <p>{{ sales_count }}</p>
-    </div>
-    <div class="card">
-        <h2>Total Credit Transactions</h2>
-        <p>{{ credit_count }}</p>
-    </div>
+<div class="logo-container">
+  <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
 </div>
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">Director Dashboard</h2>
+
+  <!-- Overview Section -->
+  <div class="row text-center">
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded">
+        <h5>Total Procurement (kg)</h5>
+        <p class="display-6">{{ total_procurement_kg }}</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded">
+        <h5>Total Sales (kg)</h5>
+        <p class="display-6">{{ total_sales_kg }}</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded">
+        <h5>Total Sales Amount</h5>
+        <p class="display-6">UGX {{ total_sales_amount }}</p>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg border rounded ">
+        <h5>Total Credit Due</h5>
+        <p class="display-6">UGX {{ total_credit_due }}</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4">
+
+  <!-- Branch Overview Section with Cards -->
+  <h4>Branch Overview</h4>
+  <div class="row">
+    {% for data in branch_data %}
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title">{{ data.branch.name }}</h5>
+          </div>
+          <div class="card-body">
+            <p><strong>Total Procurement (kg):</strong> {{ data.total_procurement }}</p>
+            <p><strong>Total Sales (kg):</strong> {{ data.total_sales_kg }}</p>
+            <p><strong>Total Sales Amount:</strong> UGX {{ data.total_sales_amount }}</p>
+            <p><strong>Total Credit Due:</strong> UGX {{ data.total_credit_due }}</p>
+            <p><strong>Sales Count:</strong> {{ data.sales_count }}</p>
+            <p><strong>Credit Count:</strong> {{ data.credit_count }}</p>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+          No branch data found.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>&copy; 2025 KGLApp. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
+
 {% endblock %}

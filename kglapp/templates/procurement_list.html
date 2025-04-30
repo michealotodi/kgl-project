@@ -1,37 +1,54 @@
-<!-- templates/kglapp/procurement_list.html -->
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Procurement List</h2>
-  <a href="{% url 'procurement' %}" class="btn btn-primary">Add New Procurement</a>
-  
-  <table class="table table-bordered mt-4">
-    <thead>
-      <tr>
-        <th>Product Name</th>
-        <th>Quantity</th>
-        <th>Unit Price</th>
-        <th>Total Price</th>
-        <th>Date Procured</th>
-        <th>Branch</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for procurement in procurements %}
-      <tr>
-        <td>{{ procurement.product_name }}</td>
-        <td>{{ procurement.quantity }}</td>
-        <td>{{ procurement.unit_price }}</td>
-        <td>{{ procurement.total_price }}</td>
-        <td>{{ procurement.date_procured|date:"d M Y, H:i" }}</td>
-        <td>{{ procurement.branch.name }}</td>  <!-- Display branch name -->
-      </tr>
-      {% empty %}
-      <tr>
-        <td colspan="6">No procurements available.</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% endblock %}
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Procurement List</h2>
 
+  <!-- Responsive table wrapper -->
+  <div class="table-responsive">
+    <table class="table table-bordered mt-4">
+      <thead class="bg-primary text-white">
+        <tr>
+          <th>Product Name</th>
+          <th>Quantity (kg)</th>
+          <th>Unit Cost (UGX)</th>
+          <th>Selling Price (UGX)</th>
+          <th>Date Procured</th>
+          <th>Time</th>
+          <th>Produce Type</th>
+          <th>Dealer Name</th>
+          <th>Contact</th>
+          <th>Branch</th>
+          <th>Source</th>
+          <th>Description</th>
+          <th>Category</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        {% for procurement in procurements %}
+        <tr>
+          <td>{{ procurement.produce_name }}</td>
+          <td>{{ procurement.tonnage_kg }}</td>
+          <td>{{ procurement.cost_ugx }}</td>
+          <td>{{ procurement.selling_price_ugx }}</td>
+          <td>{{ procurement.date|date:"d M Y" }}</td>
+          <td>{{ procurement.time|time:"H:i" }}</td>
+          <td>{{ procurement.produce_type }}</td>
+          <td>{{ procurement.dealer_name }}</td>
+          <td>{{ procurement.contact }}</td>
+          <td>{{ procurement.branch_name }}</td>
+          <td>{{ procurement.source }}</td>
+          <td>{{ procurement.description }}</td>
+          <td>{{ procurement.category }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="13" class="text-center">No procurements available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

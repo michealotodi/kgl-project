@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Sale Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Produce: {{ sale.produce_name }}</h5>
+            <p><strong>Tonnage (Kg):</strong> {{ sale.tonnage_kg }}</p>
+            <p><strong>Amount Paid:</strong> UGX {{ sale.amount_paid }}</p>
+            <p><strong>Buyer Name:</strong> {{ sale.buyer_name }}</p>
+            <p><strong>Sales Agent:</strong> {{ sale.sales_agent }}</p>
+            <p><strong>Date:</strong> {{ sale.date }}</p>
+            <p><strong>Time:</strong> {{ sale.time }}</p>
+            <p><strong>Branch:</strong> {{ sale.branch_name }}</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'sales_by_branch' sale.branch_name %}" class="btn btn-primary">
+            Back
+          </a>
+              </div>
+</div>
+{% endblock %}

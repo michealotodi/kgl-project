@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Manager Dashboard - {{ branch }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">Manager Dashboard - {{ branch }}</h2>
+  <div class="dropdown mb-4">
+    <button class="btn btn-dark dropdown-toggle" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+      Manager Dashboard Navigation
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'procurement' %}">Add Procurement</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'record_sale' %}">Record Sale</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'record_credit_sale' %}">Record Credit Sale</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'stock_page' %}">Stock Page</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'credit_list' %}">Credit List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'maganjo_sales_report' %}">Sales Report</a> <!-- Customize per branch -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+  
+        </ul>
+  </div>
+  <div class="row text-center">
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Total Procured (Kg)</h5>
+        <p class="display-6">{{ total_procured }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Total Sold (Kg)</h5>
+        <p class="display-6">{{ total_sales }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Total Credit Sales (Kg)</h5>
+        <p class="display-6">{{ total_credit_sales }}</p>
+
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Credit Due (UGX)</h5>
+        <p class="display-6">{{ total_due }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Procurement Records</h5>
+        <p class="display-6">{{ procurement_count }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h5>Sales Transactions</h5>
+        <p class="display-6">{{ sales_count }}</p>
+      </div>
+    </div>
+
+    <div class="col-md-3 mb-4">
+        {% endblock %}

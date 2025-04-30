@@ -53,7 +53,7 @@ class CreditSaleForm(forms.ModelForm):
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'produce_type', 'unit_price', 'description', 'category']  # Ensure you include the relevant fields
+        fields = ['produce_name', 'produce_type', 'unit_price', 'description', 'category', 'stock', 'minimum_stock_level']
 
 
 # forms.py
@@ -84,3 +84,54 @@ class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ['name', 'contact_name', 'phone_number', 'email', 'address']
+
+
+from django import forms
+from .models import Branch
+
+class BranchForm(forms.ModelForm):
+    class Meta:
+        model = Branch
+        fields = ['name', 'location', 'manager_name', 'phone', 'email']
+
+# from django import forms
+# from django.contrib.auth.forms import UserCreationForm
+# from .models import UserProfile, Branch
+
+# class CustomSignupForm(UserCreationForm):
+#     branch = forms.ModelChoiceField(queryset=Branch.objects.none(), required=False, empty_label="No branch assigned")
+
+#     class Meta:
+#         model = UserProfile
+#         fields = ['username', 'email', 'address', 'phonenumber', 'gender', 'is_salesagent', 'is_manager', 'is_director', 'branch']
+
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.fields['branch'].queryset = Branch.objects.all()
+
+#     def save(self, commit=True):
+#         user = super().save(commit=False)
+#         user.is_active = True
+#         if commit:
+#             user.save()
+#         return user
+
+# forms.py
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from .models import CustomUser
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ('username','first_name','last_name', 'email', 'phone_number', 'password1', 'password2', 'groups', 'user_permissions')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'POST'
+        self.helper.add_input(Submit('submit', 'Create Account'))

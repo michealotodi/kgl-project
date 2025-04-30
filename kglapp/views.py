@@ -36,10 +36,9 @@ from django.db.models import Sum
 from django.shortcuts import render
 from .models import Sale
 from django.utils import timezone
-
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from .models import UserProfile
+# from .models import UserProfile
 from django.shortcuts import render
 from django.db.models import Sum
 from .models import Sale, Procurement, CreditList
@@ -47,20 +46,25 @@ from django.shortcuts import render, redirect
 from .forms import ProductForm
 from django.shortcuts import render
 from .models import Product
+from django.shortcuts import render, redirect
+from .models import Branch
+from .forms import BranchForm
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .models import Procurement
+from .forms import ProcurementForm  
 def index(request):
     return render(request, "index.html")
 
 def home(request):
     return render(request,"home.html")
  
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from .models import Procurement
-from .forms import ProcurementForm  # Assuming you have a form for the model
+
 
 # View for listing procurements (Procurement List)
 def procurement_list(request):
-    procurements = Procurement.objects.all()  # This gets all procurement records
+    procurements = Procurement.objects.all()
+    print(procurements)  # Debugging: Check if data is retrieved
     return render(request, 'procurement_list.html', {'procurements': procurements})
 
 # View for adding a new procurement
@@ -71,7 +75,7 @@ def add_procurement(request):
             form.save()
             return redirect('procurement_list')
         else:
-            print("Form errors:", form.errors)  # 🔍 This helps you debug!
+            print("Form errors:", form.errors) 
     else:
         form = ProcurementForm()
     return render(request, 'procurement.html', {'form': form})
@@ -97,26 +101,17 @@ def sales_list(request):
     return render(request, 'sales_list.html', {'sales': sales})
 
 
-
-
-
-
 def record_credit_sale(request):
     if request.method == 'POST':
         form = CreditSaleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("credit_list")  # redirect after saving
+            return redirect("credit_list")  
         else:
-            print(form.errors)  # <-- add this for debugging
+            print(form.errors) 
     else:
         form = CreditSaleForm()
     return render(request, 'record_credit_sale.html', {'form': form})
-
-
-
-
-
 
 
 def daily_sales_report(request):
@@ -138,61 +133,94 @@ def daily_sales_report(request):
 
 def stock_page(request):
     search_query = request.GET.get('search', '')
-    
     if search_query:
         stock_items = Procurement.objects.filter(produce_name__icontains=search_query)
     else:
         stock_items = Procurement.objects.all()
-
     return render(request, 'stock_page.html', {
         'stock_items': stock_items,
         'search_query': search_query
     })
 
 
+from django.shortcuts import render, redirect
+# from .forms import CustomSignupForm
 
-def signup_view(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
+def signup(request):
+    if request.method == 'POST':
+        form = CustomSignupForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  
-            return redirect("home")  
+            form.save()
+            return redirect('login')  # redirect to your login page
     else:
-        form = UserCreationForm()
-    return render(request, "signup.html", {"form": form})
+        form = CustomSignupForm()
+    return render(request, 'signup.html', {'form': form})
 
 
 def credit_list(request):
     credits = CreditSale.objects.all()
     return render(request, 'credit_list.html', {'credits': credits})
 
-
-
 def is_director(user):
     return user.is_superuser  # Only superusers can access the director dashboard
 
-@user_passes_test(is_director)
-def director_dashboard(request):
-    total_procurement = Procurement.objects.aggregate(total_kg=Sum('tonnage_kg'))['total_kg'] or 0
-    total_sales = Sale.objects.aggregate(total_kg=Sum('tonnage_kg'), total_amount=Sum('amount_paid'))
-    total_credit = CreditSale.objects.aggregate(total_due=Sum('amount_due'), total_kg=Sum('tonnage_kg'))
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.shortcuts import render
+from .models import Branch, Procurement, Sale, CreditSale
+from django.db.models import Sum
 
+@login_required
+def director_dashboard(request):
+    # Fetch all branches
+    branches = Branch.objects.all()
+
+    # Calculate totals across all branches
+    total_procurement_kg = Procurement.objects.aggregate(total_kg=Sum('tonnage_kg'))['total_kg'] or 0
+    total_sales_kg = Sale.objects.aggregate(total_kg=Sum('tonnage_kg'))['total_kg'] or 0
+    total_sales_amount = Sale.objects.aggregate(total_amount=Sum('amount_paid'))['total_amount'] or 0
+    total_credit_due = CreditSale.objects.aggregate(total_due=Sum('amount_due'))['total_due'] or 0
+
+    # Prepare branch data
+    branch_data = []
+    for branch in branches:
+        total_procurement = Procurement.objects.filter(branch_name__iexact=branch.name).aggregate(
+            total_kg=Sum('tonnage_kg')
+        )['total_kg'] or 0
+
+        total_sales = Sale.objects.filter(branch_name__iexact=branch.name).aggregate(
+            total_kg=Sum('tonnage_kg'),
+            total_amount=Sum('amount_paid')
+        )
+
+        total_credit = CreditSale.objects.filter(branch_name__iexact=branch.name).aggregate(
+            total_due=Sum('amount_due'),
+            total_kg=Sum('tonnage_kg')
+        )
+
+        branch_data.append({
+            'branch': branch,
+            'total_procurement': total_procurement,
+            'total_sales_kg': total_sales['total_kg'] or 0,
+            'total_sales_amount': total_sales['total_amount'] or 0,
+            'total_credit_due': total_credit['total_due'] or 0,
+            'total_credit_kg': total_credit['total_kg'] or 0,
+            'sales_count': Sale.objects.filter(branch_name__iexact=branch.name).count(),
+            'credit_count': CreditSale.objects.filter(branch_name__iexact=branch.name).count(),
+        })
+
+    # Context to pass to the template
     context = {
-        'total_procurement_kg': total_procurement,
-        'total_sales_kg': total_sales['total_kg'] or 0,
-        'total_sales_amount': total_sales['total_amount'] or 0,
-        'total_credit_due': total_credit['total_due'] or 0,
-        'total_credit_kg': total_credit['total_kg'] or 0,
-        'sales_count': Sale.objects.count(),
-        'credit_count': CreditSale.objects.count(),
+        'branches': branches,
+        'total_procurement_kg': total_procurement_kg,
+        'total_sales_kg': total_sales_kg,
+        'total_sales_amount': total_sales_amount,
+        'total_credit_due': total_credit_due,
+        'branch_data': branch_data,
     }
 
     return render(request, 'director_dashboard.html', context)
-
-
 @login_required
-def manager_dashboard(request):
+def manager_dashboard_maganjo(request):
     # Let's assume the branch is stored in the manager's profile, for now hardcode for example
     manager_branch = "Maganjo"  # you can later link this to the logged-in user's profile
 
@@ -212,7 +240,7 @@ def manager_dashboard(request):
         'credit_count': credit_sales.count(),
     }
 
-    return render(request, 'manager_dashboard.html', context)
+    return render(request, 'manager_dashboard_maganjo.html', context)
 
 
 @login_required
@@ -247,19 +275,17 @@ def maganjo_sales_report(request):
         'today': today
     })
 
-# kglapp/views.py
 
-from django.shortcuts import render
 
-def company_rules(request):
-    return render(request, 'company_rules.html')
+# def company_rules(request):
+#     return render(request, 'company_rules.html')
 
 
 # views.py
 
-def user_profile(request):
-    profile = UserProfile.objects.get(user=request.user)
-    return render(request, 'user_profile.html', {'profile': profile})
+# def user_profile(request):
+#     profile = UserProfile.objects.get(user=request.user)
+#     return render(request, 'user_profile.html', {'profile': profile})
 
 
 
@@ -287,18 +313,14 @@ def branch_comparison_dashboard(request):
 
     return render(request, 'branch_comparison_dashboard.html', {'branch_data': branch_data})
 
-# views.py
 
 
 def credit_recovery_report(request):
     credit_records = CreditList.objects.all().order_by('-due_date')
     return render(request, 'credit_recovery_report.html', {'credit_records': credit_records})
 
-# views.py
 
-from django.shortcuts import render
-from django.db.models import Sum, Count
-from .models import Sale
+
 
 def sales_agent_performance(request):
     # Aggregate data for each sales agent
@@ -410,3 +432,234 @@ def add_supplier(request):
     else:
         form = SupplierForm()
     return render(request, 'add_supplier.html', {'form': form})
+
+
+
+
+def branch_list(request):
+    branches = Branch.objects.all()
+    return render(request, 'branch_list.html', {'branches': branches})
+
+def add_branch(request):
+    if request.method == 'POST':
+        form = BranchForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('branch_list')
+    else:
+        form = BranchForm()
+    return render(request, 'add_branch.html', {'form': form})
+
+
+
+
+from .models import Sale  # Import the Sale model
+from datetime import date  # Import date from datetime
+
+def sales_agent_dashboard_matugga(request):
+    today = date.today()  # Get today's date
+    
+    # Example logic to calculate today's sales for Matugga branch
+    todays_sales = Sale.objects.filter(branch_name='Matugga', date=today)
+    todays_sales_kg = sum(sale.tonnage_kg for sale in todays_sales)
+    todays_sales_amount = sum(sale.amount_paid for sale in todays_sales)
+    
+    # Example logic for monthly sales calculation
+    first_day_of_month = today.replace(day=1)
+    monthly_sales = Sale.objects.filter(branch_name='Matugga', date__gte=first_day_of_month)
+    monthly_sales_amount = sum(sale.amount_paid for sale in monthly_sales)
+
+    # Render the template with the context
+    context = {
+        'todays_sales_kg': todays_sales_kg,
+        'todays_sales_amount': todays_sales_amount,
+        'monthly_sales_amount': monthly_sales_amount,
+    }
+    return render(request, 'sales_agent_dashboard_matugga.html', context)
+
+
+
+from .models import Sale  # Import the Sale model
+from datetime import date  # Import date from datetime
+
+def sales_agent_dashboard_maganjo(request):
+    today = date.today()  # Get today's date
+    
+    # Example logic to calculate today's sales for Maganjo branch
+    todays_sales = Sale.objects.filter(branch_name='Maganjo', date=today)
+    todays_sales_kg = sum(sale.tonnage_kg for sale in todays_sales)
+    todays_sales_amount = sum(sale.amount_paid for sale in todays_sales)
+    
+    # Example logic for monthly sales calculation
+    first_day_of_month = today.replace(day=1)
+    monthly_sales = Sale.objects.filter(branch_name='Maganjo', date__gte=first_day_of_month)
+    monthly_sales_amount = sum(sale.amount_paid for sale in monthly_sales)
+
+    # Render the template with the context
+    context = {
+        'todays_sales_kg': todays_sales_kg,
+        'todays_sales_amount': todays_sales_amount,
+        'monthly_sales_amount': monthly_sales_amount,
+    }
+    return render(request, 'sales_agent_dashboard_maganjo.html', context)
+
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Sale
+
+def sale_detail(request, pk):
+    sale = get_object_or_404(Sale, pk=pk)
+    return render(request, 'sale_detail.html', {'sale': sale})
+
+
+from django.shortcuts import render, get_object_or_404
+from .models import Sale, Receipt
+from django.http import HttpResponse
+
+def generate_receipt(request, sale_id):
+    # Get the sale object by ID
+    sale = get_object_or_404(Sale, pk=sale_id)
+    
+    # Check if receipt already exists for the sale
+    try:
+        receipt = Receipt.objects.get(sale=sale)
+    except Receipt.DoesNotExist:
+        # If no receipt, create one
+        receipt = Receipt.objects.create(
+            sale=sale,
+            receipt_number=f"R{sale.id}",
+            issued_by=request.user.username
+        )
+
+    # Render the receipt template
+    return render(request, 'receipt.html', {'sale': sale, 'receipt': receipt})
+
+
+# views.py
+from django.shortcuts import render
+from .models import Sale
+
+def sales_by_branch(request, branch_name):
+    sales = Sale.objects.filter(branch_name=branch_name)
+    return render(request, 'sales_by_branch.html', {
+        'sales': sales,
+        'branch_name': branch_name
+    })
+
+
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login
+from django.shortcuts import redirect, render
+from django.contrib import messages
+
+def Login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+
+            # Check for the user's group and redirect based on role
+            if user.groups.filter(name='director').exists():
+                return redirect('director_dashboard')  # Redirect to Director Dashboard
+
+            elif user.groups.filter(name='manager').exists():
+                # Ensure the manager has a branch assigned
+                if hasattr(user, 'branch'):
+                    if user.branch.lower() == 'matugga':
+                        return redirect('manager_dashboard_matugga')
+                    elif user.branch.lower() == 'maganjo':
+                        return redirect('manager_dashboard_maganjo')
+                else:
+                    messages.error(request, 'Manager branch not specified.')
+                    return redirect('login')
+
+            elif user.groups.filter(name='sales_agent').exists():
+                # Ensure the sales agent has a branch assigned
+                if hasattr(user, 'branch'):
+                    if user.branch.lower() == 'matugga':
+                        return redirect('sales_agent_dashboard_matugga')
+                    elif user.branch.lower() == 'maganjo':
+                        return redirect('sales_agent_dashboard_maganjo')
+                else:
+                    messages.error(request, 'Sales Agent branch not specified.')
+                    return redirect('login')
+
+            else:
+                messages.error(request, 'Unauthorized role.')
+                return redirect('login')
+        
+        else:
+            messages.error(request, 'Invalid username or password.')
+
+    # Handle GET request (form rendering)
+    form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form, 'title': 'Login'})
+
+
+from django.utils import timezone
+from datetime import datetime
+from django.db.models import Sum
+from .models import Sale, Branch
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def branch_sales_report(request):
+    today = timezone.now().date()
+    month_start = today.replace(day=1)
+
+    branches = Branch.objects.all()
+
+    branch_reports = []
+
+    for branch in branches:
+        # Daily sales for branch
+        daily_sales = Sale.objects.filter(
+            branch_name=branch.name,
+            date=today  # ❗ Corrected from created_at__date to date
+        ).aggregate(
+            total_kg=Sum('tonnage_kg'),
+            total_amount=Sum('amount_paid')
+        )
+
+        # Monthly sales for branch
+        monthly_sales = Sale.objects.filter(
+            branch_name=branch.name,
+            date__gte=month_start,  # ❗ Corrected from created_at__date__gte to date__gte
+            date__lte=today
+        ).aggregate(
+            total_kg=Sum('tonnage_kg'),
+            total_amount=Sum('amount_paid')
+        )
+
+        branch_reports.append({
+            'branch': branch,
+            'daily_sales_kg': daily_sales['total_kg'] or 0,
+            'daily_sales_amount': daily_sales['total_amount'] or 0,
+            'monthly_sales_kg': monthly_sales['total_kg'] or 0,
+            'monthly_sales_amount': monthly_sales['total_amount'] or 0,
+        })
+
+    context = {
+        'branch_reports': branch_reports,
+        'today': today,
+        'this_month': month_start.strftime('%B %Y'),  # e.g., April 2025
+    }
+
+    return render(request, 'branch_sales_report.html', context)
+
+
+from .forms import CustomUserCreationForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'signup.html', {'form': form})

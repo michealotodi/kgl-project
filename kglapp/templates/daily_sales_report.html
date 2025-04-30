@@ -2,10 +2,6 @@
 {% load static %}
 
 {% block content %}
-
-<!-- External CSS if needed -->
-<link rel="stylesheet" href="{% static 'css/main.css' %}">
-
 <div class="sales-list-container">
     <h2>Today's Sales Report ({{ today }})</h2>
 
@@ -22,6 +18,8 @@
                 <th>Sales Agent</th>
                 <th>Date</th>
                 <th>Time</th>
+                <th>Receipt</th>  {# NEW COLUMN #}
+                <th>Actions</th>  <!-- 👈 Add this -->
             </tr>
         </thead>
         <tbody>
@@ -34,16 +32,22 @@
                 <td>{{ sale.sales_agent }}</td>
                 <td>{{ sale.date }}</td>
                 <td>{{ sale.time }}</td>
+                <td>
+                    <a href="{% url 'generate_receipt' sale.id %}" class="btn btn-sm btn-outline-primary">
+                        View Receipt
+                    </a>
+                </td>
+                <td>
+                    <a href="{% url 'sale_detail' sale.pk %}" class="btn btn-sm btn-outline-info">View Details</a>
+                </td> <!-- 👈 Add this -->
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7" class="text-center text-muted">No sales made today in this branch.</td>
+                <td colspan="8" class="text-center text-muted">No sales made today in this branch.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% endfor %}
-
 </div>
-
 {% endblock %}

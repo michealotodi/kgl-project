@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{%load static%}
+{% block content %}
+<style>
+    .receipt-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        font-family: 'Courier New', Courier, monospace;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 10px;
+    }
+
+    .receipt-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .receipt-header h2 {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .receipt-details p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .receipt-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .receipt-footer a {
+        font-size: 14px;
+    }
+
+    .receipt-line {
+        border-top: 1px dashed #aaa;
+        margin: 15px 0;
+    }
+</style>
+
+<div class="container mt-4">
+    <h2 class="text-center">Receipt for Sale</h2>
+
+    <div class="receipt-details">
+        <p><strong>Receipt Number:</strong> {{ receipt.receipt_number }}</p>
+        <p><strong>Sale Date:</strong> {{ sale.date }}</p>
+        <p><strong>Buyer Name:</strong> {{ sale.buyer_name }}</p>
+        <p><strong>Produce Name:</strong> {{ sale.produce_name }}</p>
+        <p><strong>Tonnage (Kg):</strong> {{ sale.tonnage_kg }}</p>
+        <p><strong>Amount Paid:</strong> UGX {{ sale.amount_paid }}</p>
+        <p><strong>Sales Agent:</strong> {{ sale.sales_agent }}</p>
+        <p><strong>Branch:</strong> {{ sale.branch_name }}</p>
+        <p><strong>Issued By:</strong> {{ receipt.issued_by }}</p>
+        <p><strong>Receipt Date:</strong> {{ receipt.receipt_date }}</p>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{% url 'sales_by_branch' sale.branch_name %}" class="btn btn-primary">
+            Back
+          </a>
+    </div>
+</div>
+{% endblock %}
+

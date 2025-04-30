@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Sales Monitoring for {{ branch_name }}</h2>
+
+  <table class="table table-bordered table-striped mt-3">
+    <thead class="thead-dark">
+      <tr>
+        <th>#</th>
+        <th>Produce Name</th>
+        <th>Tonnage (kg)</th>
+        <th>Amount Paid</th>
+        <th>Buyer Name</th>
+        <th>Sales Agent</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Receipt</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sale in sales %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ sale.produce_name }}</td>
+        <td>{{ sale.tonnage_kg }}</td>
+        <td>{{ sale.amount_paid }}</td>
+        <td>{{ sale.buyer_name }}</td>
+        <td>{{ sale.sales_agent }}</td>
+        <td>{{ sale.date }}</td>
+        <td>{{ sale.time }}</td>
+    
+        <td>
+            <a href="{% url 'generate_receipt' sale.id %}" class="btn btn-sm btn-outline-primary">
+                View Receipt
+            </a>
+        </td>
+        <td>
+            <a href="{% url 'sale_detail' sale.pk %}" class="btn btn-sm btn-outline-info">View Details</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="8" class="text-center">No sales found for this branch.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

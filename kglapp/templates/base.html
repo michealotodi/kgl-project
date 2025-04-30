@@ -1,67 +1,113 @@
 {% load static %}
+{% load custom_filters %}
+{% load bootstrap5 %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}KGLApp{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    {% load bootstrap5 %}
+    
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% bootstrap_javascript %}
+    
 </head>
 <body>
     <div class="sidebar">
         <h2>KGLApp</h2>
-        <a href="{% url 'home' %}">Home</a>
-                         
+    
+        <!-- Director View -->
+        {% if request.user|has_group:"director" %}
+            <a href="{% url 'home' %}">🏠 Home</a>
+            <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
+            <a href="{% url 'branch_sales_report' %}">📈Branch Sales Reports</a>
+            <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+            <a href="{% url 'director_dashboard' %}">📋Director Dashboard</a>
+            <a href="{% url 'branch_comparison_dashboard' %}">🏢 Branch Comparison</a>
+            <a href="{% url 'sales_by_branch' 'Matugga' %}">📍 Matugga Sales</a>
+            <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
+            <a href="{% url 'procurement_list' %}">🔄 Procurement List</a>
+            <a href="{% url 'credit_recovery_report' %}">💳 Credit Recovery Report</a>
+            <a href="{% url 'branch_list' %}">🏢 Manage Branches</a>
+            <a href="{% url 'add_branch' %}">➕ Add New Branch</a>
+            <a href="{% url 'add_supplier' %}">➕ Add New Supplier</a>
+            <a href="{% url 'logout' %}">🔓 Logout</a>
+        {% endif %}
+    
+        <!-- Manager (Maganjo) View -->
+        {% if request.user|has_group:"manager_maganjo" %}
+            <a href="{% url 'home' %}">🏠 Home</a>
+            <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
+            <a href="{% url 'branch_sales_report' %}">📈Branch Sales Reports</a>
 
-        
-        <a href="{% url 'procurement' %}">Add Procurement</a>
-        
-        
-        <a href="{% url 'record_sale' %}">Record Sale</a>
-        
-        <a href="{% url 'daily_sales' %}">Sales Reports</a>
+            <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+            <a href="{% url 'procurement_list' %}" class="btn btn-primary">🔄 Procurement List</a>
+            <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
+            <a href="{% url 'procurement' %}">➕ Add Procurement</a>
+            <a href="{% url 'record_sale' %}">➕ Record Sale</a>
+            <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
+            <a href="{% url 'manager_dashboard_maganjo' %}">📋 Manager Dashboard</a>
+            <a href="{% url 'add_product' %}">➕ Add Product</a>
+            <a href="{% url 'faq' %}">❓ FAQ</a>
+            <a href="{% url 'contact_support' %}">📞 Contact Support</a>
+            <a href="{% url 'logout' %}">🔓 Logout</a>
+        {% endif %}
+    
+        <!-- Manager (Matugga) View -->
+        {% if request.user|has_group:"manager_matugga" %}
+            <a href="{% url 'home' %}">🏠 Home</a>
+            <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
+            <a href="{% url 'branch_sales_report' %}">📈Branch Sales Reports</a>
 
-        
-        <a href="{% url 'record_credit_sale' %}">Record Credit Sale</a>
-       
-        <a href="{% url 'stock_page' %}">Stock Page</a>
+            <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+            <a href="{% url 'procurement_list' %}">🔄 Procurement List</a>
+            <a href="{% url 'sales_by_branch' 'Matugga' %}">📍 Matugga Sales</a>
+            <a href="{% url 'procurement' %}">➕ Add Procurement</a>
+            <a href="{% url 'record_sale' %}">➕ Record Sale</a>
+            <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
+            <a href="{% url 'manager_dashboard_matugga' %}">📋 Manager Dashboard</a>
+            <a href="{% url 'add_product' %}">➕ Add Product</a>
+            <a href="{% url 'faq' %}">❓ FAQ</a>
+            <a href="{% url 'contact_support' %}">📞 Contact Support</a>
+            <a href="{% url 'logout' %}">🔓 Logout</a>
+        {% endif %}
+    
+        <!-- Sales Agent (Maganjo) View -->
+        {% if request.user|has_group:"sales_agent_maganjo" %}
+            <a href="{% url 'sales_agent_dashboard_maganjo' %}">📋 Maganjo Sales Agent Dashboard</a>
+            <a href="{% url 'record_sale' %}">➕ Record Sale</a>
+            <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
+            <a href="{% url 'credit_list' %}">💳 Credit List</a>
+            <a href="{% url 'daily_sales' %}">📈 My Sales Reports</a>
+            <a href="{% url 'branch_sales_report' %}">📈Branch Sales Reports</a>
 
-        <a href="{% url 'credit_list' %}">credit list</a>
-        
-        <a href="{% url 'director_dashboard' %}">director dashboard</a>
+            <a href="{% url 'stock_page' %}">📦 Check Stock</a>
+            <a href="{% url 'faq' %}">❓ FAQ</a>
+            <a href="{% url 'contact_support' %}">📞 Contact Support</a>
+            <a href="{% url 'logout' %}">🔓 Logout</a>
 
-        <a href="{% url 'manager_dashboard' %}">manager dashboard</a>
+        {% endif %}
+    
+        <!-- Sales Agent (Matugga) View -->
+        {% if request.user|has_group:"sales_agent_matugga" %}
+            <a href="{% url 'sales_agent_dashboard_matugga' %}">📋 Matugga Sales Agent Dashboard</a>
+            <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
+            <a href="{% url 'credit_list' %}">💳 Credit List</a>
+            <a href="{% url 'record_sale' %}">➕ Record Sale</a>
+            <a href="{% url 'daily_sales' %}">📈 My Sales Reports</a>
+            <a href="{% url 'branch_sales_report' %}">📈Branch Sales Reports</a>
 
-        <a href="{% url 'manager_dashboard_matugga' %}">manager dashboard matugga</a>
+            <a href="{% url 'stock_page' %}">📦 Check Stock</a>
+            <a href="{% url 'faq' %}">❓ FAQ</a>
+            <a href="{% url 'contact_support' %}">📞 Contact Support</a>
+            <a href="{% url 'logout' %}">🔓 Logout</a>
 
-        <a href="{% url 'maganjo_sales_report' %}">maganjo sales report</a>
-
-        <a href="{% url 'branch_comparison_dashboard' %}">Branch Comparison</a>
-
-        <a href="{% url 'credit_recovery_report' %}">credit recovery report</a>
-
-        <a href="{% url 'sales_agent_performance' %}">sales agent performance</a>
-
-        <a href="{% url 'add_product' %}">add product</a>
-
-        <a href="{% url 'product_list' %}">product list</a>
-
-        <a href="{% url 'procurement_list' %}" class="btn btn-primary">procurement list</a>
-
-        
-        <a href="{% url 'user_profile' %}">Profile</a>
-
-
-        <a href="{% url 'logout'%}">Logout</a>
-
+        {% endif %}
     </div>
-
+    
     <div class="main-content">
-       <div class="content">
+        <div class="content">
             {% block content %}
-            
             {% endblock %}
         </div>
     </div>

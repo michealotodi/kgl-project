@@ -20,23 +20,22 @@
             {% csrf_token %}
             {{ form|crispy }}
             <br>
-            <label for="role">Select Role</label>
+            <!-- <label for="role">Select Role</label>
             <select name="role" id="role" required>
                 <option value="">-- Select Role --</option>
                 <option value="director">Director</option>
                 <option value="manager">Manager</option>
                 <option value="sales_agent">Sales Agent</option>
-            </select>
+            </select> -->
 
             <br>
             <br>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
         <span class="psw">Forgot password? <a href="{% url 'password_reset' %}">Reset</a></span>
-
+        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p> 
         <br>
         
-        <span class="signup">Do not have an account? <a href="{% url 'signup' %}">Sign up.</a></span>
         <br>
         
         <p>Do not share your password wit anyone.</p>

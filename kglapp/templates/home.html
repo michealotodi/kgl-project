@@ -1,54 +1,38 @@
-
 {% extends 'base.html' %}
-{%load static%}
-{% block title %}Home - KGLApp{% endblock %}
-
-{% block header %}Home page{% endblock %}
+{% load static %}
 
 {% block content %}
-<div class="logo-container">
-    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
+<div class="container mt-4">
+    <h1 class="text-center mb-4 text-primary">Karibu Groceries LTD - Company Rules</h1>
+    <p>Here, you can keep track of procurement, monitor your stock,
+        manage sales, and ensure accurate records for every transaction.</p>
+
+    <h2 class="mt-5 text-primary">📝 General Rules</h2>
+    <ul class="list-unstyled">
+        <li>✅ All employees must report to work by 8:00 AM.</li>
+        <li>✅ Professional behavior is expected at all times.</li>
+        <li>✅ No unauthorized persons are allowed in restricted areas.</li>
+        <li>✅ Use of company resources for personal gain is prohibited.</li>
+        <li>✅ All procurement and sales must be logged through the system daily.</li>
+        <li>✅ Only products available in stock should be sold. Managers must be notified if out of stock.</li>
+        <li>✅ Sold produce automatically reduces tonnage from stock.</li>
+        <li>✅ Prices are set by managers and pre-configured in the system.</li>
+        <li>✅ Sales agents cannot record produce entries.</li>
+        <li>✅ Only managers can record procurement and manage produce types, prices, and dealers.</li>
+        <li>✅ Managers can also record sales.</li>
+        <li>✅ Only the director, Mr. Micheal, can view branch-wide sales summaries.</li>
+    </ul>
+
+    <h2 class="mt-5 text-primary">⏰ Working Hours</h2>
+    <ul class="list-unstyled">
+        <li><strong>Monday - Friday:</strong> 8:00 AM to 5:00 PM</li>
+        <li><strong>Saturday:</strong> 8:00 AM to 1:00 PM</li>
+        <li><strong>Sunday:</strong> Closed</li>
+    </ul>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 KGLApp. All rights reserved.</p>
+        <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+    </footer>
 </div>
-<div class="mt-4"></div>
-    <a href="{% url 'faq' %}" class="btn btn-success mb-3">FAQ</a>
-    <a href="{% url 'contact_support' %}" class="btn btn-primary mb-3">Contact Support</a>
-    <a href="{% url 'low_stock_alerts' %}" class="btn btn-primary mb-3">Low Stock Alerts</a>
-    <a href="{% url 'supplier_list' %}" class="btn btn-primary mb-3">View Suppliers</a>
-    <a href="{% url 'add_supplier' %}" class="btn btn-success mb-3">Add New Supplier</a>
-  </div>
-<h1 class="come">Welcome to KGL Management System</h1>
-<p>Here, you can keep track of procurement, monitor your stock,
-     manage sales, and ensure accurate records for every transaction.</p>
-
-    <p> Choose an option from the sidebar to get started!</p>
-    
-    <section class="rules-section">
-        <h2 class="come">Company Rules & Regulations</h2>
-        <ul>
-            <li>Only products available in stock should be sold. Once it is out of stock, the manager should be notified.</li>
-            <li>For any sold produce, its tonnage is reduced automatically.</li>
-            <li>Prices are determined by the manager and are pre-set in the system.</li>
-            <li>No sales agent is allowed to record any produce entry.</li>
-            <li>Only the manager can record procurement and also manage produce types, prices, and dealers.</li>
-            <li>The manager can also record a sale.</li>
-            <li>Only the director, Mr. Micheal, is allowed to view sales made in all branches (summary only).</li>
-        </ul>
-        
-
-        <section class="operation-hours">
-            <h2 class="come">Operation Hours</h2>
-            <p>Our operations are open at the following times:</p>
-            <ul>
-                <li><strong>Monday - Friday:</strong> 8:00 AM - 6:00 PM</li>
-                <li><strong>Saturday:</strong> 9:00 AM - 5:00 PM</li>
-                <li><strong>Sunday:</strong> Closed</li>
-            </ul>
-        </section>
-        
-        <footer class="site-footer">
-            <p>&copy; 2025 KGLApp. All rights reserved.</p>
-            <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
-        </footer>
-        
-    </section>
 {% endblock %}

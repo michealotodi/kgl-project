@@ -1,31 +1,51 @@
 {% extends 'base.html' %}
-
 {% block content %}
-    <h1>Branch Comparison Dashboard</h1>
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">Branch Comparison Dashboard</h2>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Branch</th>
-                <th>Total Sales Amount</th>
-                <th>Total Sales (Kg)</th>
-                <th>Total Procurement (Kg)</th>
-                <th>Total Credit (Kg)</th>
-                <th>Total Credit Due</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for branch, data in branch_data.items %}
-                <tr>
-                    <td>{{ branch }}</td>
-                    <td>{{ data.total_sales_amount }}</td>
-                    <td>{{ data.total_sales_kg }}</td>
-                    <td>{{ data.total_procurement_kg }}</td>
-                    <td>{{ data.total_credit_kg }}</td>
-                    <td>{{ data.total_credit_due }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <table class="table table-bordered table-striped">
+    <thead class="bg-dark text-white">
+      <tr>
+        <th>Branch</th>
+        <th>Produce Name</th>
+        <th>Sales (Kg)</th>
+        <th>Sales (UGX)</th>
+        <th>Procurements (Kg)</th>
+        <th>Credit Sales (Kg)</th>
+        <th>Credit Due (UGX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for branch, data in branch_data.items %}
+        {% for record in data.sales %}
+        <tr>
+          <td><strong>{{ branch }}</strong></td>
+          <td>{{ record.produce_name }}</td>
+          <td>{{ record.tonnage_kg }} kg</td>
+          <td>UGX {{ record.amount_paid }}</td>
+          <td>{% for proc in data.procurements %}{% if proc.produce_name == record.produce_name %}{{ proc.tonnage_kg }} kg{% endif %}{% endfor %}</td>
+          <td>{% for credit in data.credits %}{% if credit.produce_name == record.produce_name %}{{ credit.tonnage_kg }} kg{% endif %}{% endfor %}</td>
+          <td>{% for credit in data.credits %}{% if credit.produce_name == record.produce_name %}UGX {{ credit.amount_due }}{% endif %}{% endfor %}</td>
+        </tr>
+        {% endfor %}
+        
+        <!-- Total Summary for Branch -->
+        <tr style="background-color: #2c3e50; color: white; font-weight: bold;">
+          <td colspan="2">Total for {{ branch }}</td>
+          <td>{{ data.total_sales_kg }} kg</td>
+          <td>UGX {{ data.total_sales_amount }}</td>
+          <td>{{ data.total_procurement_kg }} kg</td>
+          <td>{{ data.total_credit_kg }} kg</td>
+          <td>UGX {{ data.total_credit_due }}</td>
+        </tr>
+      {% empty %}
+      <tr><td colspan="7" class="text-center">No data available.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}
-

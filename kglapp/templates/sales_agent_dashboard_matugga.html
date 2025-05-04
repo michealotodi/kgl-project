@@ -1,39 +1,66 @@
 {% extends 'base.html' %}
-{%load static%}
+{% load static %}
 {% block content %}
-<!-- <div class="logo-container">
-    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
-</div> -->
 <div class="container mt-4">
   <h2 class="text-primary mb-4">Matugga Sales Agent Dashboard</h2>
 
-
-  
-  <!-- Overview section -->
   <div class="row text-center">
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="p-3 bg-light border rounded">
-        <h5>Today's Sales (kg)</h5>
+        <h6>Today's Sales (Kg)</h6>
         <p class="display-6">{{ todays_sales_kg }}</p>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="p-3 bg-light border rounded">
-        <h5>Today's Sales Amount</h5>
+        <h6>Today's Sales (UGX)</h6>
         <p class="display-6">UGX {{ todays_sales_amount }}</p>
       </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="p-3 bg-light border rounded">
-        <h5>Total Sales This Month</h5>
+        <h6>Today's Credit (Kg)</h6>
+        <p class="display-6">{{ todays_credit_kg }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="p-3 bg-light border rounded">
+        <h6>Today's Credit (UGX)</h6>
+        <p class="display-6">UGX {{ todays_credit_amount }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row text-center mt-4">
+    <div class="col-md-3">
+      <div class="p-3 bg-light border rounded">
+        <h6>Monthly Sales (Kg)</h6>
+        <p class="display-6">{{ monthly_sales_kg }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="p-3 bg-light border rounded">
+        <h6>Monthly Sales (UGX)</h6>
         <p class="display-6">UGX {{ monthly_sales_amount }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="p-3 bg-light border rounded">
+        <h6>Monthly Credit (Kg)</h6>
+        <p class="display-6">{{ monthly_credit_kg }}</p>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="p-3 bg-light border rounded">
+        <h6>Monthly Credit (UGX)</h6>
+        <p class="display-6">UGX {{ monthly_credit_amount }}</p>
       </div>
     </div>
   </div>
 </div>
-<footer class="site-footer">
-    <p>&copy; 2025 KGLApp. All rights reserved.</p>
-    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
-</footer>
 
+<footer class="site-footer mt-5">
+  <p>&copy; 2025 KGLApp. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

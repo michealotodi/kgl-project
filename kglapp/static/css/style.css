@@ -68,7 +68,7 @@ body {
     margin-bottom: 20px;
 }
 .procurement form{
-    background-color:#E1F5FE; ;
+    background-color:whitesmoke ;
     border: 1px solid black;
     border-radius: 25px;
     padding: 10px;
@@ -163,6 +163,7 @@ table {
     margin-bottom: 25px;
 }
 
+/* Custom Table Styles */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -175,7 +176,7 @@ table {
 }
 
 .table thead {
-    background-color: #3498db;
+    background-color: #3498db; /* Custom blue */
     color: black;
 }
 
@@ -190,8 +191,3 @@ table {
 .text-muted {
     color: #888;
 }
-    
-
-
-
-

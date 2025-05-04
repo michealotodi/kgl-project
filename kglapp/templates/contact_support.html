@@ -1,24 +1,27 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-
-{% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg p-4">
-                <h2 class="mb-4 text-center text-primary">Contact Support</h2>
-                <p class="text-muted text-center mb-4">Having an issue? Fill in the form below and we’ll get back to you shortly.</p>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg p-4">
+        <h2 class="mb-4 text-center text-primary">Contact Support</h2>
+        <p class="text-muted text-center mb-4">
+          Having an issue? Fill in the form below and we’ll get back to you
+          shortly.
+        </p>
 
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form|crispy }}
+        <form method="post">
+          {% csrf_token %} {{ form|crispy }}
 
-                    <div class="text-center mt-3">
-                        <button type="submit" class="btn btn-primary px-4">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          <div class="text-center mt-3">
+            <button type="submit" class="btn btn-primary px-4">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
+<footer class="site-footer">
+  <p>&copy; 2025 KGLApp. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

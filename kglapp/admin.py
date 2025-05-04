@@ -7,6 +7,7 @@ admin.site.register(Procurement)
 admin.site.register(Sale)
 admin.site.register(CreditSale)
 admin.site.register(CreditList)
+
 admin.site.register(FAQ)
 admin.site.register(Produce)
 admin.site.register(Supplier)
@@ -41,3 +42,5 @@ class CustomUserAdmin(UserAdmin):
     def get_roles(self, obj):
         return ", ".join([group.name for group in obj.groups.all()])
     get_roles.short_description = _('Roles')
+
+

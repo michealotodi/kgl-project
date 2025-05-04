@@ -1,30 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4">
-    <h2>Branch List</h2>
-    <a href="{% url 'add_branch' %}" class="btn btn-success mb-3">Add New Branch</a>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Manager</th>
-                <th>Phone</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for branch in branches %}
-            <tr>
-                <td>{{ branch.name }}</td>
-                <td>{{ branch.location }}</td>
-                <td>{{ branch.manager_name }}</td>
-                <td>{{ branch.phone }}</td>
-                <td>{{ branch.email }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+<h2>Branch List</h2>
+<a href="{% url 'add_branch' %}" class="btn btn-primary mb-2">Add New Branch</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Name</th><th>Location</th><th>Manager</th><th>Phone</th><th>Email</th><th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for branch in branches %}
+        <tr>
+            <td>{{ branch.name }}</td>
+            <td>{{ branch.location }}</td>
+            <td>{{ branch.manager_name }}</td>
+            <td>{{ branch.phone }}</td>
+            <td>{{ branch.email }}</td>
+            <td>
+                <a href="{% url 'edit_branch' branch.pk %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'delete_branch' branch.pk %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

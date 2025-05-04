@@ -1,75 +1,104 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
+
+{% block title %}Director Dashboard{% endblock %}
+
 {% block content %}
-<div class="logo-container">
-  <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
-</div>
 <div class="container mt-4">
-  <h2 class="text-primary mb-4">Director Dashboard</h2>
+  <h2 class="text-primary mb-4">Director Dashboard - All Branches</h2>
 
-  <!-- Overview Section -->
+  <!-- Total Stats for All Branches -->
   <div class="row text-center">
-    <div class="col-md-3 mb-3">
-      <div class="p-3 bg-light border rounded">
-        <h5>Total Procurement (kg)</h5>
-        <p class="display-6">{{ total_procurement_kg }}</p>
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6>Total Procured (Kg)</h6>
+        <p class="display-6">{{ total_procured }}</p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="p-3 bg-light border rounded">
-        <h5>Total Sales (kg)</h5>
-        <p class="display-6">{{ total_sales_kg }}</p>
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6>Total Sold (Kg)</h6>
+        <p class="display-6">{{ total_sales }}</p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="p-3 bg-light border rounded">
-        <h5>Total Sales Amount</h5>
-        <p class="display-6">UGX {{ total_sales_amount }}</p>
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6>Total Credit Sales (Kg)</h6>
+        <p class="display-6">{{ total_credit_sales }}</p>
       </div>
     </div>
-    <div class="col-md-3 mb-3">
-      <div class="p-3 bg border rounded ">
-        <h5>Total Credit Due</h5>
-        <p class="display-6">UGX {{ total_credit_due }}</p>
+    <div class="col-md-3 mb-4">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6>Total Due (UGX)</h6>
+        <p class="display-6">UGX {{ total_due }}</p>
       </div>
     </div>
   </div>
 
-  <hr class="my-4">
+  <!-- Stats for Each Branch -->
+  <h4 class="text-secondary mt-4">Branch-wise Summary</h4>
 
-  <!-- Branch Overview Section with Cards -->
-  <h4>Branch Overview</h4>
-  <div class="row">
-    {% for data in branch_data %}
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-header bg-primary text-white">
-            <h5 class="card-title">{{ data.branch.name }}</h5>
-          </div>
-          <div class="card-body">
-            <p><strong>Total Procurement (kg):</strong> {{ data.total_procurement }}</p>
-            <p><strong>Total Sales (kg):</strong> {{ data.total_sales_kg }}</p>
-            <p><strong>Total Sales Amount:</strong> UGX {{ data.total_sales_amount }}</p>
-            <p><strong>Total Credit Due:</strong> UGX {{ data.total_credit_due }}</p>
-            <p><strong>Sales Count:</strong> {{ data.sales_count }}</p>
-            <p><strong>Credit Count:</strong> {{ data.credit_count }}</p>
-          </div>
+  {% for stat in branch_stats %}
+    <h5 class="text-primary mt-4">Branch: {{ stat.branch }}</h5>
+
+    <!-- Sales Stats -->
+    <div class="row text-center">
+      <div class="col-md-3 mb-4">
+        <div class="p-3 bg-light border rounded shadow-sm">
+          <h6>Total Sold (Kg)</h6>
+          <p class="display-6">{{ stat.total_sales }}</p>
         </div>
       </div>
-    {% empty %}
-      <div class="col-12">
-        <div class="alert alert-warning" role="alert">
-          No branch data found.
+      <div class="col-md-3 mb-4">
+        <div class="p-3 bg-light border rounded shadow-sm">
+          <h6>Sales Amount (UGX)</h6>
+          <p class="display-6">UGX {{ stat.sales_amount }}</p>
         </div>
       </div>
+    </div>
+
+    <!-- Credit Sales Stats -->
+    <div class="row text-center">
+      <div class="col-md-3 mb-4">
+        <div class="p-3 bg-light border rounded shadow-sm">
+          <h6>Total Credit Sales (Kg)</h6>
+          <p class="display-6">{{ stat.total_credit_sales }}</p>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div class="p-3 bg-light border rounded shadow-sm">
+          <h6>Credit Sales Due (UGX)</h6>
+          <p class="display-6">UGX {{ stat.credit_due }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Procurement Stats -->
+    <div class="row text-center">
+      <div class="col-md-3 mb-4">
+        <div class="p-3 bg-light border rounded shadow-sm">
+          <h6>Total Procured (Kg)</h6>
+          <p class="display-6">{{ stat.total_procured }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  {% if low_stock_items %}
+  <h4 class="text-danger mt-5">Low Stock Items</h4>
+  <ul class="list-group">
+    {% for item in low_stock_items %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{ item.item }} ({{ item.quantity }} Kg)
+      <span class="badge bg-warning text-dark">Low</span>
+    </li>
     {% endfor %}
-  </div>
-
+  </ul>
+  {% endif %}
 </div>
 
-<footer class="site-footer">
+<footer class="site-footer mt-5">
   <p>&copy; 2025 KGLApp. All rights reserved.</p>
   <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
 </footer>
-
 {% endblock %}

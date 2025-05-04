@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'kglapp', 
     'crispy_forms',
-    'bootstrap5',
-    'crispy_bootstrap4',
+   'crispy_bootstrap5',
+    # 'crispy_bootstrap4',
+    'crispy_bootstrap4', 
 
 ]
 
@@ -129,6 +130,8 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+# CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = "bootstrap5"
 STATICFILES_DIRS = [
    BASE_DIR / "static",  
 ]
@@ -138,15 +141,17 @@ LOGIN_URL = '/login/'
 AUTH_USER_MODEL = 'kglapp.CustomUser'
 
 
-# settings.py
+# Email settings for development (console backend for testing)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# If you want to send real emails, use the following instead:
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'michealotodi81@gmail.com'         # Your Gmail address
-EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'        # App password (not your Gmail login)
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-SUPPORT_EMAIL = 'michealotodi81@gmail.com'   # Email address to receive support requests
+EMAIL_HOST_USER = 'michealotodi81@gmail.com'  # Your Gmail address
+EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'  # App password (not your Gmail login)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default email sender
+SUPPORT_EMAIL = 'michealotodi81@gmail.com'  # Email address for receiving support requests
 
 

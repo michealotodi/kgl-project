@@ -14,7 +14,7 @@
     <div class="procurement form">
         <form method="post" class="login-form">
             {% csrf_token %}
-            <div class="form-group">
+            <!-- <div class="form-group">
                 {{ form.produce_name|as_crispy_field }}
                 {{ form.tonnage_kg|as_crispy_field }}
                 {{ form.amount_paid|as_crispy_field }}
@@ -22,8 +22,9 @@
                 {{ form.sales_agent|as_crispy_field }}
                 {{ form.date|as_crispy_field }}
                 {{ form.time|as_crispy_field }}
-                {{ form.branch_name|as_crispy_field }}  <!-- ✅ Branch dropdown -->
-            </div>
+                {{ form.branch_name|as_crispy_field }}  
+            </div> -->
+            {{form|crispy}} 
 
             <br><br>
             <button type="submit" class="btn btn-primary">Submit</button>

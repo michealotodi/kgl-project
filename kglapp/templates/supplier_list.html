@@ -1,38 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h2>Supplier List</h2>
-    <a href="{% url 'add_supplier' %}" class="btn btn-primary mb-3">Add New Supplier</a>
-
-    <table class="table table-bordered">
-      <thead>
+<h2>Suppliers</h2>
+<a class="btn btn-primary mb-2" href="{% url 'add_supplier' %}">Add New Supplier</a>
+<table class="table table-striped">
+    <thead>
         <tr>
-          <th>Name</th>
-          <th>Contact Name</th>
-          <th>Phone Number</th>
-          <th>Email</th>
-          <th>Address</th>
-          <th>Date Added</th>
+            <th>Name</th><th>Contact</th><th>Phone</th><th>Email</th><th>Actions</th>
         </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
         {% for supplier in suppliers %}
-          <tr>
+        <tr>
             <td>{{ supplier.name }}</td>
             <td>{{ supplier.contact_name }}</td>
             <td>{{ supplier.phone_number }}</td>
             <td>{{ supplier.email }}</td>
-            <td>{{ supplier.address }}</td>
-            <td>{{ supplier.date_added }}</td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="6">No suppliers found.</td>
-          </tr>
+            <td>
+                <a class="btn btn-sm btn-warning" href="{% url 'edit_supplier' supplier.pk %}">Edit</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'delete_supplier' supplier.pk %}">Delete</a>
+            </td>
+        </tr>
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
+    </tbody>
+</table>
+<footer class="site-footer">
+  <p>&copy; 2025 KGLApp. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}
-

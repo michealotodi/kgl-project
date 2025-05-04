@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-primary mb-4">Matugga - Daily Sales Report</h2>
+  <p><strong>Date:</strong> {{ today }}</p>
+
+  <!-- Cash Sales Table -->
+  <h4 class="mt-4">Cash Sales</h4>
+  <table class="table table-bordered table-striped">
+    <thead class="bg-primary text-white">
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Customer</th>
+        <th>Quantity (Kg)</th>
+        <th>Amount Paid (UGX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sale in cash_sales %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ sale.produce_name }}</td>
+        <td>{{ sale.buyer_name }}</td>
+        <td>{{ sale.tonnage_kg }}</td>
+        <td>UGX {{ sale.amount_paid|default:"0" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center">No cash sales today.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><strong>Total Cash Sales:</strong> {{ total_cash_kg }} kg | UGX {{ total_cash_amount }}</p>
+
+  <hr>
+
+  <!-- Credit Sales Table -->
+  <h4 class="mt-4">Credit Sales</h4>
+  <table class="table table-bordered table-striped">
+    <thead class="bg-secondary text-white">
+      <tr>
+        <th>#</th>
+        <th>Product</th>
+        <th>Customer</th>
+        <th>Quantity (Kg)</th>
+        <th>Amount Due (UGX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for credit_sale in credit_sales %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ credit_sale.produce_name }}</td>
+        <td>{{ credit_sale.buyer_name }}</td>
+        <td>{{ credit_sale.tonnage_kg }}</td>
+        <td>UGX {{ credit_sale.amount_due|default:"0" }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="5" class="text-center">No credit sales today.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <p><strong>Total Credit Sales:</strong> {{ total_credit_kg }} kg | UGX {{ total_credit_amount }}</p>
+
+  <hr>
+
+  <!-- Total Sales Summary -->
+  <h4 class="mt-4 text-success">Total Sales Summary</h4>
+  <table class="table table-bordered">
+    <thead class="bg-success text-white">
+      <tr>
+        <th>Total Quantity (Kg)</th>
+        <th>Total Amount (UGX)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ total_cash_kg|default:"0" }} kg + {{ total_credit_kg|default:"0" }} kg = <strong>{{ total_sales_kg|default:"0" }} kg</strong></td>
+        <td>UGX {{ total_cash_amount|default:"0" }} + UGX {{ total_credit_amount|default:"0" }} = <strong>UGX {{ total_sales_amount|default:"0" }}</strong></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
+{% endblock %}

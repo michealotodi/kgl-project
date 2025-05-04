@@ -40,6 +40,7 @@
                 <td>
                     <a href="{% url 'sale_detail' sale.pk %}" class="btn btn-sm btn-outline-info">View Details</a>
                 </td> <!-- 👈 Add this -->
+                
             </tr>
             {% empty %}
             <tr>
@@ -50,4 +51,8 @@
     </table>
     {% endfor %}
 </div>
+<footer class="site-footer">
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

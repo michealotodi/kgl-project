@@ -2,39 +2,90 @@
 {% load static %}
 
 {% block content %}
-
-
-<div class="container mt-4">
-    <h1 class="text-center mb-4 text-primary">Karibu Groceries LTD - Company Rules</h1>
-    <p>Here, you can keep track of procurement, monitor your stock,
-        manage sales, and ensure accurate records for every transaction.</p>
-
-    <h2 class="mt-5 text-primary">📝 General Rules</h2>
-    <ul class="list-unstyled">
-        <li>✅ All employees must report to work by 8:00 AM.</li>
-        <li>✅ Professional behavior is expected at all times.</li>
-        <li>✅ No unauthorized persons are allowed in restricted areas.</li>
-        <li>✅ Use of company resources for personal gain is prohibited.</li>
-        <li>✅ All procurement and sales must be logged through the system daily.</li>
-        <li>✅ Only products available in stock should be sold. Managers must be notified if out of stock.</li>
-        <li>✅ Sold produce automatically reduces tonnage from stock.</li>
-        <li>✅ Prices are set by managers and pre-configured in the system.</li>
-        <li>✅ Sales agents cannot record produce entries.</li>
-        <li>✅ Only managers can record procurement and manage produce types, prices, and dealers.</li>
-        <li>✅ Managers can also record sales.</li>
-        <li>✅ Only the director, Mr. Micheal, can view branch-wide sales summaries.</li>
-    </ul>
-
-    <h2 class="mt-5 text-primary">⏰ Working Hours</h2>
-    <ul class="list-unstyled">
-        <li><strong>Monday - Friday:</strong> 8:00 AM to 5:00 PM</li>
-        <li><strong>Saturday:</strong> 8:00 AM to 1:00 PM</li>
-        <li><strong>Sunday:</strong> Closed</li>
-    </ul>
-
-    <footer class="site-footer">
-        <p>&copy; 2025 KGLApp. All rights reserved.</p>
-        <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
-    </footer>
+<!-- Hero Section -->
+<div class="jumbotron text-white py-5 mb-5" style="background-color: #2c3e50;">
+  <div class="container text-center">
+    <h1 class="display-4 fw-bold">Welcome to Karibu Groceries LTD</h1>
+    <p class="lead">Smart Produce Management for Branches Across Uganda</p>
+    <a href="{% url 'login' %}" class="btn btn-light btn-lg me-2">Login</a>
+    <a href="{% url 'signup' %}" class="btn btn-outline-light btn-lg">Get Started</a>
+  </div>
 </div>
+
+<!-- Features Section -->
+<div class="container text-center">
+  <h2 class="text-primary mb-4">💼 What You Can Do with KGLApp</h2>
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-success">Procurement</h5>
+          <p class="card-text">Track and manage fresh produce procurement per branch with dealer info.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-info">Sales Tracking</h5>
+          <p class="card-text">Monitor daily and monthly sales by tonnage and value, per branch or role.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-warning">Credit Sales</h5>
+          <p class="card-text">Handle customer credit, track due payments and view total outstanding balances.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-0">
+        <div class="card-body">
+          <h5 class="card-title text-danger">Stock Monitoring</h5>
+          <p class="card-text">Automatically updates stock with each procurement or sale — never run out!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- About Section -->
+<div class="container my-5">
+  <h2 class="text-primary text-center mb-4">🌟 About Karibu Groceries LTD</h2>
+  <p class="text-center">
+    Karibu Groceries LTD is a leading wholesale produce distributor across Uganda.
+    This platform helps streamline operations for Directors, Managers, and Sales Agents,
+    ensuring transparency, accuracy, and efficiency in procurement, sales, credit, and reporting.
+  </p>
+</div>
+
+<!-- Testimonials or Stats (Optional) -->
+<div class="container my-5">
+  <h3 class="text-primary text-center mb-4">📈 Trusted by Branches</h3>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <h5 class="fw-bold">2 Branches</h5>
+      <p>Matugga & Maganjo covered</p>
+    </div>
+    <div class="col-md-4">
+      <h5 class="fw-bold">500+ Transactions</h5>
+      <p>Daily sales and procurements recorded</p>
+    </div>
+    <div class="col-md-4">
+      <h5 class="fw-bold">Real-Time Reports</h5>
+      <p>For managers and directors</p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="site-footer text-center mt-5">
+  <p>&copy; 2025 Karibu Groceries LTD. All rights reserved.</p>
+  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+</footer>
 {% endblock %}

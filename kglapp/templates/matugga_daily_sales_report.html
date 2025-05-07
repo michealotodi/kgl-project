@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container mt-4">
-  <h2 class="text-primary mb-4">Matugga - Daily Sales Report</h2>
-  <p><strong>Date:</strong> {{ today }}</p>
+    <h2 class="text-center" style="background-color: #2c3e50; color: white; padding: 10px 0;">Matugga - Daily Sales Report</h2>
+    <p><strong>Date:</strong> {{ today }}</p>
 
   <!-- Cash Sales Table -->
   <h4 class="mt-4">Cash Sales</h4>
@@ -35,32 +35,51 @@
   <hr>
 
   <!-- Credit Sales Table -->
-  <h4 class="mt-4">Credit Sales</h4>
-  <table class="table table-bordered table-striped">
-    <thead class="bg-secondary text-white">
-      <tr>
-        <th>#</th>
-        <th>Product</th>
-        <th>Customer</th>
-        <th>Quantity (Kg)</th>
-        <th>Amount Due (UGX)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for credit_sale in credit_sales %}
-      <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>{{ credit_sale.produce_name }}</td>
-        <td>{{ credit_sale.buyer_name }}</td>
-        <td>{{ credit_sale.tonnage_kg }}</td>
-        <td>UGX {{ credit_sale.amount_due|default:"0" }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="5" class="text-center">No credit sales today.</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <p><strong>Total Credit Sales:</strong> {{ total_credit_kg }} kg | UGX {{ total_credit_amount }}</p>
+<!-- Credit Sales Table -->
+<h4 class="mt-4">Credit Sales</h4>
+<table class="table table-bordered table-striped">
+  <thead class="bg-secondary text-white">
+    <tr>
+      <th>#</th>
+      <th>Product</th>
+      <th>Customer</th>
+      <th>National ID</th>
+      <th>Location</th>
+      <th>Contact</th>
+      <th>Quantity (Kg)</th>
+      <th>Amount Due (UGX)</th>
+      <th>Sales Agent</th>
+      <th>Due Date</th>
+      <th>Cleared</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for credit_sale in credit_sales %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ credit_sale.produce_name }}</td>
+      <td>{{ credit_sale.buyer_name }}</td>
+      <td>{{ credit_sale.national_id }}</td>
+      <td>{{ credit_sale.location }}</td>
+      <td>{{ credit_sale.contact }}</td>
+      <td>{{ credit_sale.tonnage_kg }}</td>
+      <td>UGX {{ credit_sale.amount_due|default:"0" }}</td>
+      <td>{{ credit_sale.sales_agent }}</td>
+      <td>{{ credit_sale.due_date }}</td>
+      <td>
+        {% if credit_sale.cleared %}
+          <span class="badge bg-success">Cleared</span>
+        {% else %}
+          <span class="badge bg-warning text-dark">Uncleared</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="11" class="text-center">No credit sales today.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<p><strong>Total Credit Sales:</strong> {{ total_credit_kg }} kg | UGX {{ total_credit_amount }}</p>
 
   <hr>
 

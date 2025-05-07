@@ -17,7 +17,6 @@ from .forms import (
     CreditSaleForm,
     FAQForm,
     ProcurementForm,
-    ProductForm,
     SaleForm,
     SupplierForm,
 )
@@ -62,6 +61,29 @@ def add_procurement(request):
         form = ProcurementForm()
     return render(request, "procurement.html", {"form": form})
 
+# Edit (Update) View
+def edit_procurement(request, pk):
+    procurement = get_object_or_404(Procurement, pk=pk)
+    if request.method == "POST":
+        form = ProcurementForm(request.POST, instance=procurement)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Procurement record updated successfully.")
+            return redirect('procurement_list')  # Change to your actual list view name
+    else:
+        form = ProcurementForm(instance=procurement)
+    return render(request, 'edit_procurement.html', {'form': form})
+
+# Delete View
+def delete_procurement(request, pk):
+    procurement = get_object_or_404(Procurement, pk=pk)
+    if request.method == "POST":
+        procurement.delete()
+        messages.success(request, "Procurement record deleted successfully.")
+        return redirect('procurement_list')
+    return render(request, 'delete_procurement.html', {'procurement': procurement})
+
+
 
 def record_sale(request):
     if request.method == "POST":
@@ -79,9 +101,28 @@ def sale_success(request):
     return render(request, "sale_success.html")
 
 
-def sales_list(request):
+def daily_sales(request):
     sales = Sale.objects.all()
-    return render(request, "sales_list.html", {"sales": sales})
+    return render(request, "daily_sales.html", {"sales": sales})
+
+def edit_sale(request, pk):
+    sale = get_object_or_404(Sale, pk=pk)
+    if request.method == "POST":
+        form = SaleForm(request.POST, instance=sale)
+        if form.is_valid():
+            form.save()
+            return redirect("daily_sales")
+    else:
+        form = SaleForm(instance=sale)
+    return render(request, "edit_sale.html", {"form": form})
+
+def delete_sale(request, pk):
+    sale = get_object_or_404(Sale, pk=pk)
+    if request.method == "POST":
+        sale.delete()
+        return redirect("daily_sales")
+    return render(request, "delete_sale.html", {"sale": sale})
+
 
 
 def record_credit_sale(request):
@@ -95,6 +136,42 @@ def record_credit_sale(request):
     else:
         form = CreditSaleForm()
     return render(request, "record_credit_sale.html", {"form": form})
+
+
+# views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import CreditSale
+from .forms import CreditSaleForm
+
+# Edit Credit Sale
+def edit_credit_sale(request, pk):
+    credit_sale = get_object_or_404(CreditSale, pk=pk)
+    if request.method == "POST":
+        form = CreditSaleForm(request.POST, instance=credit_sale)
+        if form.is_valid():
+            form.save()
+            return redirect("credit_list")
+    else:
+        form = CreditSaleForm(instance=credit_sale)
+    return render(request, "edit_credit_sale.html", {"form": form})
+
+# Delete Credit Sale
+def delete_credit_sale(request, pk):
+    credit_sale = get_object_or_404(CreditSale, pk=pk)
+    if request.method == "POST":
+        credit_sale.delete()
+        return redirect("credit_list")
+    return render(request, "delete_credit_sale.html", {"credit_sale": credit_sale})
+
+from django.shortcuts import get_object_or_404, redirect
+from .models import CreditSale
+
+def mark_as_cleared(request, pk):
+    credit_sale = get_object_or_404(CreditSale, pk=pk)
+    credit_sale.cleared = True  # Mark as cleared
+    credit_sale.save()  # Save the changes
+    return redirect('credit_list')  # Redirect back to the credit list page
+
 
 
 def daily_sales_report(request):
@@ -318,7 +395,7 @@ def manager_dashboard_matugga(request):
         "low_stock_items": low_stock_items,
     }
 
-    return render(request, "manager_dashboard_mat.html", context)
+    return render(request, "manager_dashboard_matugga.html", context)
 
 
 def maganjo_sales_report(request):
@@ -361,10 +438,24 @@ def branch_comparison_dashboard(request):
         }
 
     return render(request, "branch_comparison_dashboard.html", {"branch_data": branch_data})
+
 def credit_recovery_report(request):
     credit_records = CreditList.objects.all().order_by("-due_date")
     return render(
         request, "credit_recovery_report.html", {"credit_records": credit_records}
+    )
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import CreditList  # Use your actual credit model name
+
+@login_required
+def credit_recovery_report_all_branches(request):
+    credit_records = CreditList.objects.all().order_by("-due_date")
+
+    return render(
+        request,
+        "credit_recovery_report_all_branches.html",
+        {"credit_records": credit_records}
     )
 
 
@@ -388,36 +479,39 @@ def sales_agent_performance(request):
 # views.py
 
 
-def add_product(request):
-    if request.method == "POST":
-        form = ProductForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect("product_list")  # Create this view or redirect wherever
-    else:
-        form = ProductForm()
-    return render(request, "add_product.html", {"form": form})
+# def add_product(request):
+#     if request.method == "POST":
+#         form = ProductForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect("product_list")  # Create this view or redirect wherever
+#     else:
+#         form = ProductForm()
+#     return render(request, "add_product.html", {"form": form})
 
 
 # views.py
 
 
-def product_list(request):
-    products = Product.objects.all().order_by("-date_added")
-    return render(request, "product_list.html", {"products": products})
+# def product_list(request):
+#     products = Product.objects.all().order_by("-date_added")
+#     return render(request, "product_list.html", {"products": products})
 
 
 # views.py
 
 
+
+from django.contrib import messages  # ✅ Add this line
 
 def faq_view(request):
-    faqs = FAQ.objects.filter(is_answered=True)  # Show only answered
+    faqs = FAQ.objects.filter(is_answered=True)
     if request.method == "POST":
         form = FAQForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("faq")  # Or show success message
+            messages.success(request, "Your question has been submitted successfully!")  # ✅ Added
+            return redirect("faq")
     else:
         form = FAQForm()
     return render(request, "faq.html", {"faqs": faqs, "form": form})
@@ -425,50 +519,92 @@ def faq_view(request):
 
 
 
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from .forms import ContactForm  # Make sure you have imported your form
+
 def contact_support(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Extract form data
             name = form.cleaned_data["name"]
             email = form.cleaned_data["email"]
             message = form.cleaned_data["message"]
 
-            # Send email to the support team
-            send_mail(
-                subject=f"Support Request from {name}",
-                message=message,
-                from_email=email,
-                recipient_list=[
-                    settings.SUPPORT_EMAIL
-                ],  # Email address to receive support requests
-            )
+            try:
+                send_mail(
+                    subject=f"Support Request from {name}",
+                    message=f"From: {email}\n\n{message}",
+                    from_email=settings.DEFAULT_FROM_EMAIL,  # Use a verified sender
+                    recipient_list=[settings.SUPPORT_EMAIL],
+                    fail_silently=False,  # Show errors if email fails
+                )
+                return redirect("thank_you")
 
-            # Optionally, redirect to a "Thank you" page
-            return redirect("thank_you")
+            except Exception as e:
+                # Optional: log or show the error during development
+                print("Email sending failed:", e)
+                form.add_error(None, "Failed to send email. Please try again later.")
 
     else:
         form = ContactForm()
 
     return render(request, "contact_support.html", {"form": form})
+# views.py
 
+from django.shortcuts import render
 
 def thank_you(request):
     return render(request, "thank_you.html")
 
 
+
 # views.py
 
+# views.py
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import Stock
 
+@login_required
 def low_stock_alerts(request):
-    low_stock_products = Product.objects.filter(stock__lte=F("minimum_stock_level"))
-    return render(
-        request, "low_stock_alerts.html", {"low_stock_products": low_stock_products}
-    )
+    user = request.user
+    threshold = 10
+    low_stock_products = []
 
+    # Branch-based filtering based on user group
+    if user.groups.filter(name='director').exists():
+        low_stock_products = Stock.objects.filter(quantity__lt=threshold)
 
-# views.py
+    elif user.groups.filter(name='manager_matugga').exists() or user.groups.filter(name='sales_agent_matugga').exists():
+        low_stock_products = Stock.objects.filter(branch_name='Matugga', quantity__lt=threshold)
+
+    elif user.groups.filter(name='manager_maganjo').exists() or user.groups.filter(name='sales_agent_maganjo').exists():
+        low_stock_products = Stock.objects.filter(branch_name='Maganjo', quantity__lt=threshold)
+
+    # Send email only once per session
+    if low_stock_products and not request.session.get("low_stock_email_sent", False):
+        item_list = "\n".join([
+            f"{item.item} ({item.branch_name}) - Remaining: {item.quantity}"
+            for item in low_stock_products
+        ])
+
+        send_mail(
+            subject="🔔 KGL Low Stock Alert",
+            message=f"The following items are low in stock:\n\n{item_list}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=['director@kgl.com', 'manager@kgl.com'],  # Replace with real emails
+            fail_silently=False
+        )
+        request.session["low_stock_email_sent"] = True
+
+    return render(request, 'low_stock_alerts.html', {
+        'low_stock_products': low_stock_products
+    })
 
 
 # View to list all suppliers
@@ -687,40 +823,28 @@ def Login(request):
         if user is not None:
             login(request, user)
 
-            # Check for the user's group and redirect based on role
+            # Redirect based on exact group name
             if user.groups.filter(name="director").exists():
-                return redirect("director_dashboard")  # Redirect to Director Dashboard
+                return redirect("director_dashboard")
 
-            elif user.groups.filter(name="manager").exists():
-                # Ensure the manager has a branch assigned
-                if hasattr(user, "branch"):
-                    if user.branch.lower() == "matugga":
-                        return redirect("manager_dashboard_matugga")
-                    elif user.branch.lower() == "maganjo":
-                        return redirect("manager_dashboard_maganjo")
-                else:
-                    messages.error(request, "Manager branch not specified.")
-                    return redirect("login")
+            elif user.groups.filter(name="manager_matugga").exists():
+                return redirect("manager_dashboard_matugga")
 
-            elif user.groups.filter(name="sales_agent").exists():
-                # Ensure the sales agent has a branch assigned
-                if hasattr(user, "branch"):
-                    if user.branch.lower() == "matugga":
-                        return redirect("sales_agent_dashboard_matugga")
-                    elif user.branch.lower() == "maganjo":
-                        return redirect("sales_agent_dashboard_maganjo")
-                else:
-                    messages.error(request, "Sales Agent branch not specified.")
-                    return redirect("login")
+            elif user.groups.filter(name="manager_maganjo").exists():
+                return redirect("manager_dashboard_maganjo")
+
+            elif user.groups.filter(name="sales_agent_matugga").exists():
+                return redirect("sales_agent_dashboard_matugga")
+
+            elif user.groups.filter(name="sales_agent_maganjo").exists():
+                return redirect("sales_agent_dashboard_maganjo")
 
             else:
                 messages.error(request, "Unauthorized role.")
                 return redirect("login")
-
         else:
             messages.error(request, "Invalid username or password.")
 
-    # Handle GET request (form rendering)
     form = AuthenticationForm()
     return render(request, "login.html", {"form": form, "title": "Login"})
 
@@ -867,3 +991,4 @@ def send_test_email(request):
 
     send_mail(subject, message, from_email, recipient_list, fail_silently=False)
     return HttpResponse('Test email sent successfully!')
+

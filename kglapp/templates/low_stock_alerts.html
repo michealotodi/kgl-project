@@ -9,18 +9,26 @@
       <ul class="list-group">
         {% for product in low_stock_products %}
           <li class="list-group-item d-flex justify-content-between align-items-center">
-            {{ product.name }}
-            <span class="badge bg-danger text-white">Remaining: {{ product.stock }}</span>
+            <div>
+              <strong>{{ product.name }}</strong> 
+              <small class="text-muted">(Branch: {{ product.branch }})</small>
+            </div>
+            <span class="badge bg-danger text-white">
+              Remaining: {{ product.stock }}
+            </span>
           </li>
         {% endfor %}
       </ul>
     {% else %}
-      <p>No low stock alerts right now. ✅</p>
+      <div class="alert alert-success mt-3" role="alert">
+        No low stock alerts right now. ✅
+      </div>
     {% endif %}
   </div>
-  <footer class="site-footer">
+
+  <footer class="site-footer mt-4 text-center">
+    <hr>
     <p>&copy; 2025 KGLApp. All rights reserved.</p>
     <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
-</footer>
+  </footer>
 {% endblock %}
-

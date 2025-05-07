@@ -8,8 +8,9 @@
 <!-- <div class="logo-container">
     <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
 </div> -->
-<h1>Our Stock Overview</h1>
-
+<div class="py-3 px-4 mb-4 text-white text-center rounded" style="background-color: #2c3e50;">
+    <h2 class="mb-0">📦 Our Stock Overview</h2>
+  </div>
 <!-- Search Form -->
 <form method="get" action="{% url 'stock_page' %}" class="search-form">
     <input type="text" name="search" placeholder="Search Produce" value="{{ search_query }}" class="search-input">
@@ -19,7 +20,7 @@
 <!-- Stock Table -->
 <div class="table-responsive">
     <table class="table table-bordered mt-4">
-        <thead class="bg-primary text-white">
+        <thead>
             <tr>
                 <th>Name</th>
                 <th>Type</th>

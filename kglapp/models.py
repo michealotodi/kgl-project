@@ -42,6 +42,8 @@ class SalesAgent(models.Model):
 
 
 # models for procurement
+from django.core.exceptions import ValidationError
+
 class Procurement(models.Model):
     PRODUCE_TYPE_CHOICES = [
         ("beans", "Beans"),
@@ -96,6 +98,9 @@ class Procurement(models.Model):
     def __str__(self):
         return f"{self.produce_name} - {self.dealer_name} - {self.branch_name}"
 
+    def clean(self):
+        if self.source == "Dealer" and self.tonnage_kg < 1000:
+            raise ValidationError("Individual dealers must supply at least 1000 kg.")
 
 from django.db import models
 from django.utils import timezone
@@ -119,31 +124,75 @@ class Sale(models.Model):
     date = models.DateField(default=timezone.now)
     time = models.TimeField(default=timezone.now)
     branch_name = models.CharField(max_length=50, choices=BRANCH_CHOICES, default="Matugga")
-    payment_type = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default="cash")  # New field
-    amount_due = models.PositiveIntegerField(null=True, blank=True)  # Optional field for credit sales
+    payment_type = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default="cash")
+    amount_due = models.PositiveIntegerField(null=True, blank=True)  # Optional for credit sales
 
     def __str__(self):
         return f"{self.produce_name} sold to {self.buyer_name} ({self.payment_type})"
+
+from django.db import models
+from django.utils import timezone
+import re
+
 class CreditSale(models.Model):
     BRANCH_CHOICES = [
         ("Maganjo", "Maganjo"),
         ("Matugga", "Matugga"),
     ]
+    
     buyer_name = models.CharField(max_length=100)
-    national_id = models.CharField(max_length=14)
+    national_id = models.CharField(max_length=14)  # National ID field
     location = models.CharField(max_length=100)
-    contact = models.CharField(max_length=15)
+    contact = models.CharField(max_length=15)  # Contact field
     amount_due = models.PositiveIntegerField()
     sales_agent = models.CharField(max_length=100)
     due_date = models.DateField()
     produce_name = models.CharField(max_length=100)
     produce_type = models.CharField(max_length=100)
-    tonnage_kg = models.CharField(max_length=225)
+    tonnage_kg = models.PositiveIntegerField()  # Tonnage should be numeric
     dispatch_date = models.DateField(default=timezone.now)
     branch_name = models.CharField(max_length=100, choices=BRANCH_CHOICES)
+    
+    # New field to mark if the credit sale is cleared
+    cleared = models.BooleanField(default=False)  # 'False' means uncleared, 'True' means cleared
 
     def __str__(self):
         return f"{self.buyer_name} - {self.produce_name}"
+
+    def clean(self):
+        errors = []
+
+        # Validate national ID (Assume format is NIN and should be 14 characters)
+        if not re.match(r"^[A-Z0-9]{14}$", self.national_id):
+            errors.append("National ID must be in the valid format (e.g., 12345678901234).")
+
+        # Validate contact number (Assume it's a valid phone number, e.g., 0701234567)
+        if not re.match(r"^\+?(\d{10}|\d{12})$", self.contact):
+            errors.append("Contact number must be a valid phone number (e.g., +256701234567).")
+
+        # Validate amount due (at least 5 digits)
+        if self.amount_due < 10000:
+            errors.append("Amount due must be at least 5 digits (e.g., 10000 UgX).")
+
+        # Validate buyer's name (at least 2 characters)
+        if len(self.buyer_name.strip()) < 2:
+            errors.append("Buyer's name must be at least 2 characters.")
+
+        # Validate sales agent's name (at least 2 characters)
+        if len(self.sales_agent.strip()) < 2:
+            errors.append("Sales agent name must be at least 2 characters.")
+
+        # Validate tonnage (should be numeric and greater than 0)
+        if self.tonnage_kg <= 0:
+            errors.append("Tonnage must be a positive number.")
+
+        # Validate produce name (at least 2 characters)
+        if len(self.produce_name.strip()) < 2:
+            errors.append("Produce name must be at least 2 characters.")
+
+        # If there are validation errors, raise a ValidationError
+        if errors:
+            raise ValidationError(errors)
 
 
 class Produce(models.Model):
@@ -174,7 +223,7 @@ class CreditList(models.Model):
     tonnage_kg = models.PositiveIntegerField()  # FIX: Changed to PositiveIntegerField
     dispatch_date = models.DateField(default=timezone.now)
     branch_name = models.CharField(max_length=100)
-    
+
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -242,15 +291,20 @@ class Product(models.Model):
         return self.name
 
 
+from django.db import models
+
 class FAQ(models.Model):
-    question = models.CharField(max_length=255)
+    question = models.TextField()
     answer = models.TextField(blank=True, null=True)
-    submitted_at = models.DateTimeField(auto_now_add=True)
     is_answered = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.question
+    def save(self, *args, **kwargs):
+        if self.answer:
+            self.is_answered = True
+        super().save(*args, **kwargs)
 
+    def __str__(self):
+        return self.question[:50]
 
 class Supplier(models.Model):
     name = models.CharField(max_length=100)

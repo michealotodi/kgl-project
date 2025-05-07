@@ -5,34 +5,32 @@
 {% block title %}Record Sale - KGLApp{% endblock %}
 
 {% block content %}
-<div class="logo-container">
-    <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo">
-</div>
+<!-- <div class="container mt-5">
+    <div class="text-center mb-4">
+        <img src="{% static 'css/kgl1.jpeg' %}" alt="KGL Logo" class="logo" style="max-height: 100px;">
+    </div> -->
 
-<div class="container">
-    <h2>Record Sale</h2>
-    <div class="procurement form">
-        <form method="post" class="login-form">
-            {% csrf_token %}
-            <!-- <div class="form-group">
-                {{ form.produce_name|as_crispy_field }}
-                {{ form.tonnage_kg|as_crispy_field }}
-                {{ form.amount_paid|as_crispy_field }}
-                {{ form.buyer_name|as_crispy_field }}
-                {{ form.sales_agent|as_crispy_field }}
-                {{ form.date|as_crispy_field }}
-                {{ form.time|as_crispy_field }}
-                {{ form.branch_name|as_crispy_field }}  
-            </div> -->
-            {{form|crispy}} 
-
-            <br><br>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow border">
+                <div class="card-header text-white text-center" style="background-color: #2c3e50;">
+                    <h2 class="mb-0">Record Sale</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="login-form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary px-4">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<footer class="site-footer">
+<footer class="site-footer text-center mt-4">
     <p>&copy; 2025 KGLApp. All rights reserved.</p>
     <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
 </footer>

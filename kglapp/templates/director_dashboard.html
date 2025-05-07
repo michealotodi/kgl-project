@@ -4,33 +4,56 @@
 {% block title %}Director Dashboard{% endblock %}
 
 {% block content %}
+<form method="post" action="{% url 'logout' %}" style="display: inline;">
+  {% csrf_token %}
+  <button type="submit" 
+      style="background-color: #0d6efd; 
+             color: white; 
+             border: none; 
+             padding: 10px 20px; 
+             border-radius: 5px; 
+             font-size: 16px; 
+             font-weight: bold; 
+             cursor: pointer;
+             transition: background-color 0.3s;">
+     🔓 Logout
+  </button>
+</form>
 <div class="container mt-4">
-  <h2 class="text-primary mb-4">Director Dashboard - All Branches</h2>
-
+  <div class="text-center text-white py-3 mb-4 rounded" style="background-color: #2c3e50;">
+    <h2>Director Dashboard - All Branches</h2>
+  </div>
+  <div class="alert alert-warning mt-3">
+    <p>
+      Some products may be low in stock. 
+      <a href="{% url 'low_stock_alerts' %}">Check alerts</a>.
+    </p>
+  </div>
+  
   <!-- Total Stats for All Branches -->
   <div class="row text-center">
     <div class="col-md-3 mb-4">
       <div class="p-3 bg-light border rounded shadow-sm">
-        <h6>Total Procured (Kg)</h6>
-        <p class="display-6">{{ total_procured }}</p>
+        <h6 class="text-muted">Total Procured (Kg)</h6>
+        <p class="display-6 text-dark">{{ total_procured }}</p>
       </div>
     </div>
     <div class="col-md-3 mb-4">
       <div class="p-3 bg-light border rounded shadow-sm">
-        <h6>Total Sold (Kg)</h6>
-        <p class="display-6">{{ total_sales }}</p>
+        <h6 class="text-muted">Total Sold (Kg)</h6>
+        <p class="display-6 text-dark">{{ total_sales }}</p>
       </div>
     </div>
     <div class="col-md-3 mb-4">
       <div class="p-3 bg-light border rounded shadow-sm">
-        <h6>Total Credit Sales (Kg)</h6>
-        <p class="display-6">{{ total_credit_sales }}</p>
+        <h6 class="text-muted">Total Credit Sales (Kg)</h6>
+        <p class="display-6 text-dark">{{ total_credit_sales }}</p>
       </div>
     </div>
     <div class="col-md-3 mb-4">
       <div class="p-3 bg-light border rounded shadow-sm">
-        <h6>Total Due (UGX)</h6>
-        <p class="display-6">UGX {{ total_due }}</p>
+        <h6 class="text-muted">Total Due (UGX)</h6>
+        <p class="display-6 text-dark">UGX {{ total_due }}</p>
       </div>
     </div>
   </div>
@@ -45,14 +68,14 @@
     <div class="row text-center">
       <div class="col-md-3 mb-4">
         <div class="p-3 bg-light border rounded shadow-sm">
-          <h6>Total Sold (Kg)</h6>
-          <p class="display-6">{{ stat.total_sales }}</p>
+          <h6 class="text-muted">Total Sold (Kg)</h6>
+          <p class="display-6 text-dark">{{ stat.total_sales }}</p>
         </div>
       </div>
       <div class="col-md-3 mb-4">
         <div class="p-3 bg-light border rounded shadow-sm">
-          <h6>Sales Amount (UGX)</h6>
-          <p class="display-6">UGX {{ stat.sales_amount }}</p>
+          <h6 class="text-muted">Sales Amount (UGX)</h6>
+          <p class="display-6 text-dark">UGX {{ stat.sales_amount }}</p>
         </div>
       </div>
     </div>
@@ -61,14 +84,14 @@
     <div class="row text-center">
       <div class="col-md-3 mb-4">
         <div class="p-3 bg-light border rounded shadow-sm">
-          <h6>Total Credit Sales (Kg)</h6>
-          <p class="display-6">{{ stat.total_credit_sales }}</p>
+          <h6 class="text-muted">Total Credit Sales (Kg)</h6>
+          <p class="display-6 text-dark">{{ stat.total_credit_sales }}</p>
         </div>
       </div>
       <div class="col-md-3 mb-4">
         <div class="p-3 bg-light border rounded shadow-sm">
-          <h6>Credit Sales Due (UGX)</h6>
-          <p class="display-6">UGX {{ stat.credit_due }}</p>
+          <h6 class="text-muted">Credit Sales Due (UGX)</h6>
+          <p class="display-6 text-dark">UGX {{ stat.credit_due }}</p>
         </div>
       </div>
     </div>
@@ -77,8 +100,8 @@
     <div class="row text-center">
       <div class="col-md-3 mb-4">
         <div class="p-3 bg-light border rounded shadow-sm">
-          <h6>Total Procured (Kg)</h6>
-          <p class="display-6">{{ stat.total_procured }}</p>
+          <h6 class="text-muted">Total Procured (Kg)</h6>
+          <p class="display-6 text-dark">{{ stat.total_procured }}</p>
         </div>
       </div>
     </div>

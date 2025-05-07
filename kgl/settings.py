@@ -142,16 +142,19 @@ AUTH_USER_MODEL = 'kglapp.CustomUser'
 
 
 # Email settings for development (console backend for testing)
+# Use console backend during development to print emails to the console for testing
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# If you want to send real emails, use the following instead:
+# For real email sending, use the SMTP backend. Uncomment the following lines when you're ready for production:
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'michealotodi81@gmail.com'  # Your Gmail address
-EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'  # App password (not your Gmail login)
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default email sender
-SUPPORT_EMAIL = 'michealotodi81@gmail.com'  # Email address for receiving support requests
+EMAIL_HOST_PASSWORD = 'nxitpdsqjussrnaa'  # App password (not your Gmail login, ensure it's generated from Google account settings)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default email sender (usually the same as the host user)
 
+# Email address for receiving support requests (you can keep this the same or use a different support address)
+SUPPORT_EMAIL = 'michealotodi81@gmail.com'
 

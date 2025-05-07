@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Suppliers</h2>
+<h2 class="text-center mb-4 text-white" style="background-color: #2c3e50; padding: 15px;">🔗 Suppliers</h2>
 <a class="btn btn-primary mb-2" href="{% url 'add_supplier' %}">Add New Supplier</a>
+
+<!-- Table for displaying suppliers -->
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Name</th><th>Contact</th><th>Phone</th><th>Email</th><th>Actions</th>
+            <th>Name</th>
+            <th>Contact Person</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -17,6 +23,7 @@
             <td>{{ supplier.phone_number }}</td>
             <td>{{ supplier.email }}</td>
             <td>
+                <!-- Edit and Delete actions -->
                 <a class="btn btn-sm btn-warning" href="{% url 'edit_supplier' supplier.pk %}">Edit</a>
                 <a class="btn btn-sm btn-danger" href="{% url 'delete_supplier' supplier.pk %}">Delete</a>
             </td>
@@ -24,8 +31,10 @@
         {% endfor %}
     </tbody>
 </table>
+
+<!-- Footer Section -->
 <footer class="site-footer">
-  <p>&copy; 2025 KGLApp. All rights reserved.</p>
-  <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
+    <p>&copy; 2025 KGLApp. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:info@kglapp.com">info@kglapp.com</a></p>
 </footer>
 {% endblock %}

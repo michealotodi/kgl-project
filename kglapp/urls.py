@@ -13,7 +13,7 @@ from django.shortcuts import render
 from django.urls import path
 from .views import director_dashboard
 from django.urls import path
-from .views import add_product
+# from .views import add_product
 from .views import faq_view  # 👈 Import the view function
 # from .views import branch_sales_report
 from .views import matugga_daily_sales_report
@@ -22,15 +22,17 @@ from .views import send_test_email
 urlpatterns = [
 
     path("login/", views.Login, name="login"),
-    path('', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
 
     path("", views.index, name="index"),
     path("home/", views.home, name="home"),
     path("procurement/", views.add_procurement, name="procurement"),
     path("logout/", LogoutView.as_view(), name="logout"),
     path("record-sale/", views.record_sale, name="record_sale"),
+    path("sales/<int:pk>/edit/", views.edit_sale, name="edit_sale"),
+    path("sales/<int:pk>/delete/", views.delete_sale, name="delete_sale"),
     path("sale-success/", views.sale_success, name="sale_success"),
-    path("sales-list/", views.sales_list, name="sales_list"),
+    # path("sales-list/", views.sales_list, name="sales_list"),
     path("record-credit/", views.record_credit_sale, name="record_credit_sale"),
     path("daily-sales/", views.daily_sales_report, name="daily_sales"),
     path("stock/", views.stock_page, name="stock_page"),
@@ -83,8 +85,8 @@ urlpatterns = [
         views.sales_agent_performance,
         name="sales_agent_performance",
     ),
-    path("add-product/", add_product, name="add_product"),
-    path("product-list/", views.product_list, name="product_list"),
+    # path("add-product/", add_product, name="add_product"),
+    path('credit-recovery-all-branches/', views.credit_recovery_report_all_branches, name='credit_recovery_report_all_branches'),
     path("procurements/", views.procurement_list, name="procurement_list"),
     path("faq/", faq_view, name="faq"),
     path("contact/", views.contact_support, name="contact_support"),
@@ -145,6 +147,11 @@ urlpatterns = [
 
 
     path('send-test-email/', send_test_email, name='send_test_email'),
+    path('procurement/<int:pk>/edit/', views.edit_procurement, name='edit_procurement'),
+    path('procurement/<int:pk>/delete/', views.delete_procurement, name='delete_procurement'),
 
+    path('credits/<int:pk>/edit/', views.edit_credit_sale, name='edit_credit_sale'),
+    path('credits/<int:pk>/delete/', views.delete_credit_sale, name='delete_credit_sale'),
+    path('mark_as_cleared/<int:pk>/', views.mark_as_cleared, name='mark_as_cleared'),
 
 ]

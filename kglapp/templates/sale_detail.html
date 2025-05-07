@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2 class="text-primary mb-4">Sale Details</h2>
+    <h2 class="text-white text-center mb-4" style="background-color: #2c3e50; padding: 15px;">💰 Sale Details</h2>
 
     <div class="card">
         <div class="card-body">
@@ -18,7 +18,7 @@
     </div>
 
     <div class="mt-4">
-        <a href="{% url 'sales_by_branch' sale.branch_name %}" class="btn btn-primary">
+        <a href="{% url 'daily_sales' %}" class="btn btn-primary">
             Back
           </a>
               </div>

@@ -16,103 +16,67 @@
 
       <!-- Director View -->
       {% if request.user|has_group:"director" %}
-      <a href="{% url 'home' %}">🏠 Home</a>
-      <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
       <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+
+      <a href="{% url 'credit_recovery_report_all_branches' %}">💳View Credit Recovery Report</a>
+
       <a href="{% url 'director_dashboard' %}">📋Director Dashboard</a>
       <a href="{% url 'branch_comparison_dashboard' %}">🏢 Branch Comparison</a>
       <a href="{% url 'sales_by_branch' 'Matugga' %}">📍 Matugga Sales</a>
       <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
       <a href="{% url 'procurement_list' %}">🔄 Procurement List</a>
-      <a href="{% url 'credit_recovery_report' %}">💳 Credit Recovery Report</a>
       <a href="{% url 'branch_list' %}">🏢 Manage Branches</a>
       <a href="{% url 'add_branch' %}">➕ Add New Branch</a>
       <a href="{% url 'add_supplier' %}">➕ Add New Supplier</a>
+      <a href="{% url 'branch_list' %}">🔄Branch List</a>
+      <a href="{% url 'supplier_list' %}">🔄View Suppliers</a>
+      <a href="{% url 'credit_list' %}">💳 Credit List</a>
 
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" 
-            style="background-color: #0d6efd; 
-                   color: white; 
-                   border: none; 
-                   padding: 10px 20px; 
-                   border-radius: 5px; 
-                   font-size: 16px; 
-                   font-weight: bold; 
-                   cursor: pointer;
-                   transition: background-color 0.3s;">
-           🔓 Logout
-        </button>
-    </form>
+      
       {% endif %}
  
       <!-- Manager (Maganjo) View -->
       {% if request.user|has_group:"manager_maganjo" %}
-      <a href="{% url 'home' %}">🏠 Home</a>
-      <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
       <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+
+      <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
       <a href="{% url 'procurement_list' %}"
         >🔄 Procurement List</a
       >
-      <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
       <a href="{% url 'procurement' %}">➕ Add Procurement</a>
       <a href="{% url 'record_sale' %}">➕ Record Sale</a>
       <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
       <a href="{% url 'manager_dashboard_maganjo' %}">📋 Manager Dashboard</a>
-      <a href="{% url 'add_product' %}">➕ Add Product</a>
       <a href="{% url 'faq' %}">❓ FAQ</a>
       <a href="{% url 'contact_support' %}">📞 Contact Support</a>
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" 
-            style="background-color: #0d6efd; 
-                   color: white; 
-                   border: none; 
-                   padding: 10px 20px; 
-                   border-radius: 5px; 
-                   font-size: 16px; 
-                   font-weight: bold; 
-                   cursor: pointer;
-                   transition: background-color 0.3s;">
-           🔓 Logout
-        </button>
-    </form>
+      <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
+      <a href="{% url 'credit_list' %}">💳 Credit List</a>
+
+      
       {% endif %}
 
       <!-- Manager (Matugga) View -->
       {% if request.user|has_group:"manager_matugga" %}
-      <a href="{% url 'home' %}">🏠 Home</a>
+      <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+
       <a href="{% url 'daily_sales' %}">📈 Sales Reports</a>
 
-      <a href="{% url 'stock_page' %}">📊 Stock Page</a>
       <a href="{% url 'procurement_list' %}">🔄 Procurement List</a>
       <a href="{% url 'sales_by_branch' 'Matugga' %}">📍 Matugga Sales</a>
       <a href="{% url 'procurement' %}">➕ Add Procurement</a>
       <a href="{% url 'record_sale' %}">➕ Record Sale</a>
       <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
       <a href="{% url 'manager_dashboard_matugga' %}">📋 Manager Dashboard</a>
-      <a href="{% url 'add_product' %}">➕ Add Product</a>
       <a href="{% url 'faq' %}">❓ FAQ</a>
       <a href="{% url 'contact_support' %}">📞 Contact Support</a>
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" 
-            style="background-color: #0d6efd; 
-                   color: white; 
-                   border: none; 
-                   padding: 10px 20px; 
-                   border-radius: 5px; 
-                   font-size: 16px; 
-                   font-weight: bold; 
-                   cursor: pointer;
-                   transition: background-color 0.3s;">
-           🔓 Logout
-        </button>
-    </form>
+      <a href="{% url 'credit_list' %}">💳 Credit List</a>
+
       {% endif %}
 
       <!-- Sales Agent (Maganjo) View -->
       {% if request.user|has_group:"sales_agent_maganjo" %}
+      <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+
       <a href="{% url 'sales_agent_dashboard_maganjo' %}"
         >📋 Maganjo Sales Agent Dashboard</a
       >
@@ -120,32 +84,18 @@
       <a href="{% url 'record_credit_sale' %}">💳 Record Credit Sale</a>
       <a href="{% url 'credit_list' %}">💳 Credit List</a>
       <a href="{% url 'daily_sales' %}">📈 My Sales Reports</a>
+      <a href="{% url 'sales_by_branch' 'Maganjo' %}">📍 Maganjo Sales</a>
 
-      <a href="{% url 'stock_page' %}">📦 Check Stock</a>
       <a href="{% url 'faq' %}">❓ FAQ</a>
       <a href="{% url 'contact_support' %}">📞 Contact Support</a>
-      <a href="{% url 'magganjo_daily_sales_report' %}">View Maganjo Daily Sales Report</a>
 
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" 
-            style="background-color: #0d6efd; 
-                   color: white; 
-                   border: none; 
-                   padding: 10px 20px; 
-                   border-radius: 5px; 
-                   font-size: 16px; 
-                   font-weight: bold; 
-                   cursor: pointer;
-                   transition: background-color 0.3s;">
-           🔓 Logout
-        </button>
-    </form>
 
       {% endif %}
 
       <!-- Sales Agent (Matugga) View -->
       {% if request.user|has_group:"sales_agent_matugga" %}
+      <a href="{% url 'stock_page' %}">📊 Stock Page</a>
+
       <a href="{% url 'sales_agent_dashboard_matugga' %}"
         >📋 Matugga Sales Agent Dashboard</a
       >
@@ -153,26 +103,11 @@
       <a href="{% url 'credit_list' %}">💳 Credit List</a>
       <a href="{% url 'record_sale' %}">➕ Record Sale</a>
       <a href="{% url 'daily_sales' %}">📈 My Sales Reports</a>
-      <a href="{% url 'matugga_daily_sales_report' %}">View Matugga Report</a>
+      <a href="{% url 'sales_by_branch' 'Matugga' %}">📍 Matugga Sales</a>
 
-      <a href="{% url 'stock_page' %}">📦 Check Stock</a>
       <a href="{% url 'faq' %}">❓ FAQ</a>
       <a href="{% url 'contact_support' %}">📞 Contact Support</a>
-      <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" 
-            style="background-color: #0d6efd; 
-                   color: white; 
-                   border: none; 
-                   padding: 10px 20px; 
-                   border-radius: 5px; 
-                   font-size: 16px; 
-                   font-weight: bold; 
-                   cursor: pointer;
-                   transition: background-color 0.3s;">
-           🔓 Logout
-        </button>
-    </form>
+      
       {% endif %}
     </div>
 

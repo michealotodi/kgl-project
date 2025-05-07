@@ -3,8 +3,10 @@
 
 {% block content %}
 <div class="sales-list-container">
-    <h2>Today's Sales Report ({{ today }})</h2>
-
+    <div class="py-3 px-4 mb-4 text-center rounded" style="background-color: #2c3e50;">
+        <h2 class="mb-0 text-white">📊 Today's Sales Report ({{ today }})</h2>
+    </div>
+    
     {% for branch, sales in branch_sales.items %}
     <h3>Branch: {{ branch }}</h3>
     
@@ -20,6 +22,7 @@
                 <th>Time</th>
                 <th>Receipt</th>  {# NEW COLUMN #}
                 <th>Actions</th>  <!-- 👈 Add this -->
+                <th>Edit / Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -40,8 +43,13 @@
                 <td>
                     <a href="{% url 'sale_detail' sale.pk %}" class="btn btn-sm btn-outline-info">View Details</a>
                 </td> <!-- 👈 Add this -->
-                
+                <td>
+                    <a href="{% url 'edit_sale' sale.pk %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'delete_sale' sale.pk %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            
             </tr>
+
             {% empty %}
             <tr>
                 <td colspan="8" class="text-center text-muted">No sales made today in this branch.</td>

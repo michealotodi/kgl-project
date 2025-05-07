@@ -1,59 +1,82 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+<form method="post" action="{% url 'logout' %}" style="display: inline;">
+  {% csrf_token %}
+  <button type="submit" 
+      style="background-color: #0d6efd; 
+             color: white; 
+             border: none; 
+             padding: 10px 20px; 
+             border-radius: 5px; 
+             font-size: 16px; 
+             font-weight: bold; 
+             cursor: pointer;
+             transition: background-color 0.3s;">
+     🔓 Logout
+  </button>
+</form>
 <div class="container mt-4">
-  <h2 class="text-primary mb-4">Matugga Sales Agent Dashboard</h2>
+  <div class="text-center text-white py-3 mb-4 rounded" style="background-color: #2c3e50;">
+    <h2>Matugga Sales Agent Dashboard</h2>
+  </div>
+  <div class="alert alert-warning mt-3">
+    <p>
+      Some products may be low in stock. 
+      <a href="{% url 'low_stock_alerts' %}">Check alerts</a>.
+    </p>
+  </div>
 
   <div class="row text-center">
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Today's Sales (Kg)</h6>
-        <p class="display-6">{{ todays_sales_kg }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Today's Sales (Kg)</h6>
+        <p class="display-6 text-dark">{{ todays_sales_kg }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Today's Sales (UGX)</h6>
-        <p class="display-6">UGX {{ todays_sales_amount }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Today's Sales (UGX)</h6>
+        <p class="display-6 text-dark">UGX {{ todays_sales_amount }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Today's Credit (Kg)</h6>
-        <p class="display-6">{{ todays_credit_kg }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Today's Credit (Kg)</h6>
+        <p class="display-6 text-dark">{{ todays_credit_kg }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Today's Credit (UGX)</h6>
-        <p class="display-6">UGX {{ todays_credit_amount }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Today's Credit (UGX)</h6>
+        <p class="display-6 text-dark">UGX {{ todays_credit_amount }}</p>
       </div>
     </div>
   </div>
 
   <div class="row text-center mt-4">
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Monthly Sales (Kg)</h6>
-        <p class="display-6">{{ monthly_sales_kg }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Monthly Sales (Kg)</h6>
+        <p class="display-6 text-dark">{{ monthly_sales_kg }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Monthly Sales (UGX)</h6>
-        <p class="display-6">UGX {{ monthly_sales_amount }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Monthly Sales (UGX)</h6>
+        <p class="display-6 text-dark">UGX {{ monthly_sales_amount }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Monthly Credit (Kg)</h6>
-        <p class="display-6">{{ monthly_credit_kg }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Monthly Credit (Kg)</h6>
+        <p class="display-6 text-dark">{{ monthly_credit_kg }}</p>
       </div>
     </div>
-    <div class="col-md-3">
-      <div class="p-3 bg-light border rounded">
-        <h6>Monthly Credit (UGX)</h6>
-        <p class="display-6">UGX {{ monthly_credit_amount }}</p>
+    <div class="col-md-3 mb-3">
+      <div class="p-3 bg-light border rounded shadow-sm">
+        <h6 class="text-muted">Monthly Credit (UGX)</h6>
+        <p class="display-6 text-dark">UGX {{ monthly_credit_amount }}</p>
       </div>
     </div>
   </div>
